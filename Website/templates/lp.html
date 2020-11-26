@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Linear Programming Notes - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @charset "UTF-8";@import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child > ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+    <script type="text/x-mathjax-config">
+  	MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+	</script>
+	<script type="text/javascript"
+	  src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled" data-hard-breaks="true"><h1 id="Linear-Programming-Notes" data-id="Linear-Programming-Notes"><a class="anchor hidden-xs" href="#Linear-Programming-Notes" title="Linear-Programming-Notes"><span class="octicon octicon-link"></span></a><span>Linear Programming Notes</span></h1><hr><h2 id="Introduction" data-id="Introduction"><a class="anchor hidden-xs" href="#Introduction" title="Introduction"><span class="octicon octicon-link"></span></a><span>Introduction</span></h2><h3 id="Aim" data-id="Aim"><a class="anchor hidden-xs" href="#Aim" title="Aim"><span class="octicon octicon-link"></span></a><span>Aim</span></h3><ul>
+<li><strong><span>Linear programming is an optimization technique for a system of linear constraints and a linear objective function.</span></strong></li>
+<li><span>Here, “linear” means an expression of the form </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-752">\sum_i a_i x_i + b</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-753">x_i</script></span><span>'s are variables and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-754">b</script></span><span> is a constant.</span></li>
+<li><strong><span>The objective function</span></strong><span> defines the quantity to be optimized. The aim of linear programming is to find the values of the variables (decision variables that will decide the output) that maximize or minimize the objective function while satisfying all the constraints.</span></li>
+<li><span>Linear programming finds wide use in supply chain operations, optimizing delivery routes, shelf space optimization, machine learning etc.</span></li>
+</ul><h3 id="Algorithms" data-id="Algorithms"><a class="anchor hidden-xs" href="#Algorithms" title="Algorithms"><span class="octicon octicon-link"></span></a><span>Algorithms</span></h3><ul>
+<li><span>The simplex algorithm for solving linear programming problems performs well in practice but it takes exponential time in the worst case.</span></li>
+<li><span>However, linear programming has been solved in polynomial time by algorithms like the ellipsoid algorithm, and the Karmarkar’s algorithm which led to increased research in interior-point methods for linear programming.</span></li>
+<li><span>LP-duality is used as a prime proof technique in several algorithms and associated theorems which we will look at subsequently.</span></li>
+</ul><hr><h2 id="Modelling-the-problem" data-id="Modelling-the-problem"><a class="anchor hidden-xs" href="#Modelling-the-problem" title="Modelling-the-problem"><span class="octicon octicon-link"></span></a><span>Modelling the problem</span></h2><h3 id="The-general-problem" data-id="The-general-problem"><a class="anchor hidden-xs" href="#The-general-problem" title="The-general-problem"><span class="octicon octicon-link"></span></a><span>The general problem</span></h3><p><strong><span>Maximize (or) minimize objective function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-755">Z = c_{1}x_{1} + c_{2}x_{2} + c_{3}x_{3} + ... c_{n}x_{n}</script></span><span> subject to the constraints:</span></strong></p><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-756"> a_{11}x_{1} + a_{12}x_{2} + ... + a_{1n}x_{n} \leq \text{or} = \text{or} \geq b_{1} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-757"> a_{21}x_{1} + a_{22}x_{2} + ... + a_{2n}x_{n} \leq \text{or} = \text{or} \geq b_{2} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-758"> ... </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-759"> a_{m1}x_{1} + a_{m2}x_{2} + ... + a_{mn}x_{n} \leq \text{or} = \text{or} \geq b_{m} </script></span></p><p><span>and the </span><strong><span>non-negativity restrictions</span></strong><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-760">x_{1}, x_{2}, x_{3}, ... x_{n} \geq 0</script></span><span>.</span></p><h3 id="Basic-Terminology" data-id="Basic-Terminology"><a class="anchor hidden-xs" href="#Basic-Terminology" title="Basic-Terminology"><span class="octicon octicon-link"></span></a><span>Basic Terminology</span></h3><ul>
+<li><span>If </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-762">Ax = b</script></span><span>, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-763">x \geq 0</script></span><span>, then x is a </span><strong><span>feasible solution</span></strong><span>.</span></li>
+<li><span>A linear program is feasible if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-764">∃</script></span><span> a feasible solution, otherwise it is said to be infeasible.</span></li>
+<li><span>An </span><strong><span>optimal solution</span></strong><span> </span><span class="mathjax"></span><script type="math/tex" id="MathJax-Element-765">x^{∗}</script></span><span> is the minimum (or maximum) out of all feasible solutions.</span></li>
+<li><span>A linear program is </span><strong><span>unbounded from below (or above)</span></strong><span> if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-766">\forall\lambda</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-767">\in</script></span><span> R, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-769">x^{*}</script></span><span> s.t. </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-770">c^{T}x^{∗} \leq (or \geq) λ</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-771">c</script></span><span> is the coefficient vector of the objective function.</span></li>
+</ul><h3 id="Canonical-and-Standard-Forms" data-id="Canonical-and-Standard-Forms"><a class="anchor hidden-xs" href="#Canonical-and-Standard-Forms" title="Canonical-and-Standard-Forms"><span class="octicon octicon-link"></span></a><span>Canonical and Standard Forms</span></h3><p><span>Let the decision variables in a linear program be  </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-772">x_{1}, x_{2}, x_{3}, ... x_{n}</script></span><span>, subject to linear equality or inequality constraints. To describe properties of and algorithms for linear programs, it is convenient to express them in similar forms.</span></p><h4 id="Canonical-form" data-id="Canonical-form"><a class="anchor hidden-xs" href="#Canonical-form" title="Canonical-form"><span class="octicon octicon-link"></span></a><span>Canonical form</span></h4><p><span>A linear program is said to be in canonical form if it satisfies the following conditions:</span></p><ul>
+<li><span>Objective function requires to be maximised</span></li>
+<li><span>Permits only </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-773">\leq</script></span><span> constraints</span></li>
+<li><span>The decision variables must be non-negative</span></li>
+</ul><p><span>To convert any linear program to its canonical form, we</span></p><ul>
+<li><span>Replace any constraint of the form </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-774">ax \geq b</script></span><span> with </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-775">-ax \leq -b</script></span><span>.</span></li>
+<li><span>Equality constraint of the form </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-776">ax = b</script></span><span> can be modeled with two inequalities: </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-777">ax \leq b</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-778">ax \geq b</script></span><span> which in canonical form reduces to: </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-779">ax \leq b</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-780">-ax \leq -b</script></span><span>.</span></li>
+<li><span>Change a minimization problem to a maximization problem by negating the objective function.</span></li>
+<li><span>Replace any unconstrained or negative variable </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-781">x</script></span><span> with the difference of two new variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-782">x^{+}-x^{-}</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-783">x^{+}, x^{-} \geq 0</script></span><span>.</span></li>
+</ul><h4 id="Standard-form" data-id="Standard-form"><a class="anchor hidden-xs" href="#Standard-form" title="Standard-form"><span class="octicon octicon-link"></span></a><span>Standard form</span></h4><p><span>A linear program is said to be in standard form if it satisfies the following conditions:</span></p><ul>
+<li><span>RHS (constant side) of the constraints needs to be non-negative</span></li>
+<li><span>Permits only </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-784">=</script></span><span> constraints</span></li>
+<li><span>The decision variables must be non-negative</span></li>
+</ul><p><span>To convert any linear program to its standard form, we</span></p><ul>
+<li><span>Replace any constraint of the form </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-785">ax \geq (or \leq) b</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-786">b<0</script></span><span>  with </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-787">-ax \leq (or \geq) -b</script></span><span>.</span></li>
+<li><span>Add a nonnegative variable to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-788">\leq</script></span><span> constraints (called slack variable) and subtract a nonnegative variable from </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-789">\geq</script></span><span> constraints (called surplus variable).</span><br>
+<span>For example: By introducing the slack variable </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-790">y\geq 0</script></span><span> in the inequality </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-791">ax \leq b</script></span><span>, we can convert it to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-792">ax + y = b</script></span><span> and by introducing the surplus variable </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-793">y'\geq 0</script></span><span> in the inequality </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-794">a'x' \geq b'</script></span><span>, we can convert it to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-795">a'x' = b' + y'</script></span><span>.</span></li>
+<li><span>Replace any unconstrained or negative variable </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-796">x</script></span><span> with the difference of two new variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-797">x^{+}-x^{-}</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-798">x^{+}, x^{-} \geq 0</script></span><span>.</span></li>
+</ul><hr><h2 id="Convexity" data-id="Convexity"><a class="anchor hidden-xs" href="#Convexity" title="Convexity"><span class="octicon octicon-link"></span></a><span>Convexity</span></h2><h3 id="Convex-Combinations" data-id="Convex-Combinations"><a class="anchor hidden-xs" href="#Convex-Combinations" title="Convex-Combinations"><span class="octicon octicon-link"></span></a><span>Convex Combinations</span></h3><p><strong><span class="mathjax"><script type="math/tex" id="MathJax-Element-799">\lambda_{1}v_{1} + \lambda_{2}v_{2} + ... \lambda_{n}v_{n}</script></span><span> is a convex combination of points </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-800">v_{1}, v_{2} ... v_{n}</script></span><span> if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-801">\lambda_{1} + \lambda_{2} + ... \lambda_{n} = 1</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-803">1 \leq i \leq n</script></span><span>.</span></strong></p><h3 id="Convex-Set" data-id="Convex-Set"><a class="anchor hidden-xs" href="#Convex-Set" title="Convex-Set"><span class="octicon octicon-link"></span></a><span>Convex Set</span></h3><p><strong><span>A set </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-804">S</script></span><span> in </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-805">R^{n}</script></span><span> is convex if it contains all the convex combinations of the points in </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-806">S</script></span><span>.</span></strong></p><p><span>A rough illustration for two dimension (</span><span class="mathjax"><script type="math/tex" id="MathJax-Element-807">n=2</script></span><span>) for the sake of visualisation:</span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="https://i.imgur.com/NbGvK1c.jpg" width="400"></p><h3 id="Some-useful-points" data-id="Some-useful-points"><a class="anchor hidden-xs" href="#Some-useful-points" title="Some-useful-points"><span class="octicon octicon-link"></span></a><span>Some useful points</span></h3><ul>
+<li><span>The intersection of convex sets is a </span><strong><span>convex set</span></strong><span>. (easy to prove)</span></li>
+<li><span>A </span><strong><span>hyperplane</span></strong><span> is a subspace whose dimension is one less than that of its ambient space (surrounding space). For instance, a line cutting across a plane.</span></li>
+<li><span>A </span><strong><span>half-space</span></strong><span> is either of the two parts into which a hyperplane divides a space.</span></li>
+<li><span>A </span><strong><span>half space</span></strong><span> can be represented by the linear inequality </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-808">a_{1}x_{1} + a_{2}x_{2} + ... + a_{n}x_{n} \geq b</script></span><span>. It is a convex set.</span></li>
+<li><span>The intersection of a set of half spaces and is called a </span><strong><span>polyhedron</span></strong><span>. If it is finite, it is called a </span><strong><span>polytope</span></strong><span>.</span></li>
+<li><span>A </span><strong><span>face</span></strong><span> is an intersection of finitely many hyperplanes.</span></li>
+<li><span>For </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-809">n</script></span><span> variables, a face of dimension </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-810">n-1</script></span><span> (in one hyperplane) is called a </span><strong><span>facet</span></strong><span> and a face of dimension </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-811">0</script></span><span> (in </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-812">n</script></span><span> hyperplanes) is called a </span><strong><span>vertex</span></strong><span>.</span></li>
+<li><strong><span>Every point in a polytope can be expressed as a convex combination of its vertices.</span></strong></li>
+</ul><blockquote>
+<p><em><span>A rough intuitive proof can be thought using induction. For 1 vertex (dim V = 0) its trivially true, we assume it true for dim V = k. When we add extend the polytope to the next dimension (dim V = k+1), we consider lines passing through a new points in the polytope. These lines will intersect the faces of the polytope at two points. Now, any point on the face can be expressed as a convex combination of respective vertices (as dim V = k). Hence, the new points can eventually be expressed as a convex combination of the vertices.</span></em></p>
+</blockquote><p> <img src="https://i.imgur.com/14M5VSo.jpg" width="150">
+&nbsp;&nbsp;&nbsp;<img src="https://i.imgur.com/k6CoZqi.jpg" width="250"><img src="https://i.imgur.com/UKyla2v.jpg" width="300"></p><hr><h2 id="Geometric-view" data-id="Geometric-view"><a class="anchor hidden-xs" href="#Geometric-view" title="Geometric-view"><span class="octicon octicon-link"></span></a><span>Geometric view</span></h2><h3 id="Theorem" data-id="Theorem"><a class="anchor hidden-xs" href="#Theorem" title="Theorem"><span class="octicon octicon-link"></span></a><span>Theorem</span></h3><p><strong><span>At least one of the points where the objective function is minimal is a vertex.</span></strong></p><h3 id="Proof" data-id="Proof"><a class="anchor hidden-xs" href="#Proof" title="Proof"><span class="octicon octicon-link"></span></a><span>Proof</span></h3><p><span>Let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-813">x^{*}</script></span><span> be the minimum. As each point in a polytope is a convex combination of the vertices </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-814">v_{1}, v_{2} ... v_{t}</script></span><span>, we have</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-815"> x^{*} = \lambda_{1}v_{1} + \lambda_{2}v_{2} + ... \lambda_{t}v_{t} </script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-816">\lambda_{1} + \lambda_{2} + ... \lambda_{t} = 1</script></span></p><p><span>and the objective function value at optimality can be expressed as</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-817"> cx^{*} = \lambda_{1}(cv_{1}) + \lambda_{2}(cv_{2}) + ... \lambda_{t}(cv_{t}) </script></span><span>  where c is transpose of coefficient vector and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-818">x^{*}</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-819">v_{i}</script></span><span> s are position vectors of the concerned points.</span></p><p><span>Now, let us assume that the minimum is not at a vertex, i.e.,</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-820"> cx^{*} < cv_{i} </script></span><span> for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-821">1 \leq i \leq t</script></span><span>.</span></p><p><span>Therefore,</span></p><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-822"> cx^{*} = \lambda_{1}cv_{1} + \lambda_{2}cv_{2} + ... \lambda_{t}cv_{t} > \lambda_{1}cx^{*} + \lambda_{2}cx^{*} + ... \lambda_{t}cx^{*} = (\lambda_{1} + \lambda_{2} + ... \lambda_{t})cx^{*} = cx^{*} </script></span><span> </span><strong><span>which is a contradiction.</span></strong></p><p><span>Hence, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-823">x^{*}</script></span><span> must be one of the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-824">v_{i}</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-825">1 \leq i \leq t</script></span><span>.</span></p><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/ZfAFaeg.jpg" width="300"><span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/fFsADYl.jpg" width="300"></p><hr><h1 id="Simplex-Method" data-id="Simplex-Method"><a class="anchor hidden-xs" href="#Simplex-Method" title="Simplex-Method"><span class="octicon octicon-link"></span></a><span>Simplex Method</span></h1><h3 id="Intuition" data-id="Intuition"><a class="anchor hidden-xs" href="#Intuition" title="Intuition"><span class="octicon octicon-link"></span></a><span>Intuition</span></h3><p><span>Goal: </span><strong><span>To solve a linear program</span></strong></p><p><span>For a set of linear equations, </span><strong><span>a basic solution</span></strong><span> can be thought of as a solution where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-826">x_{1}~,...x_{m}</script></span><span> take the values </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-827">b_{1},...b_{m}</script></span><span> respectively and all other x</span><sub><span>i</span></sub><span> s are assigned the value </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-828">0</script></span><span> as shown below:</span></p><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e</span><img src="https://i.imgur.com/2qYemMc.jpg" width="400" height="200"></p><p><span>Useful Points:</span></p><ul>
+<li><span>A </span><strong><span>Basic Feasible Solution (BFS)</span></strong><span> essentially requires </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-829">b_{i}</script></span><span>'s to be non negative as for a linear program, all the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-830">x_{i}</script></span><span>'s need to take non negative values.</span></li>
+<li><span>An </span><strong><span>optimal solution is located at a vertex</span></strong><span>.</span></li>
+<li><span>A </span><strong><span>vertex is a BFS</span></strong><span>.</span></li>
+<li><span>We can move from one BFS to a neighbouring BFS.</span></li>
+<li><span>We can detect whether a BFS is optimal.</span></li>
+<li><span>From any BFS, we can move to a BFS with a better cost.</span></li>
+</ul><p><span>Use in Linear Programs:</span></p><ul>
+<li><span>For a linear program, we first express it in its canonical form and add corresponding slack variables to convert the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-831">\leq</script></span><span> inequalities into equalities. We modify the objective function so that we need to minimise it.</span></li>
+<li><em><span>To get a basic solution, we essentially select </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-832">m</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-833">x_{i}</script></span><span>'s and put them on the LHS and express them in terms of the other variables (called non basic variables) using Gaussian Elimination.</span></em></li>
+<li><em><span>Then, we assign them the values of the constants on the RHS and the put the rest </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-834">x_{i}</script></span><span>'s as 0 to get a BFS (vertex) of the linear program.</span></em></li>
+</ul><blockquote>
+<p><em><span>It is easy to see why this gives a vertex as it is the single point that intersects with all m constraints on the boundary.</span></em></p>
+</blockquote><h3 id="Naive-algorithm" data-id="Naive-algorithm"><a class="anchor hidden-xs" href="#Naive-algorithm" title="Naive-algorithm"><span class="octicon octicon-link"></span></a><span>Naive algorithm</span></h3><p><span>The naive algorithm for this method would be to iterate over all the vertices and get the optimal solution. However, there will be </span><strong><span class="mathjax"><script type="math/tex" id="MathJax-Element-835">^{n} c_{m}</script></span></strong><span> such possible combinations which does not work well computationally for large cases.</span></p><h3 id="Algorithm" data-id="Algorithm"><a class="anchor hidden-xs" href="#Algorithm" title="Algorithm"><span class="octicon octicon-link"></span></a><span>Algorithm</span></h3><p><span>Goal: </span><strong><span>To minimise the objective function while satisfying the constraints.</span></strong></p><p><em><span>The key idea of the simple algorithm is to move from one BFS to a better BFS till we reach the optimal (smallest value of objective function). We are guaranteed to find an optimal due to the convexity of the solution space.</span></em></p><p><span>So, </span><strong><span>the basic steps we would take to move from one BFS to another BFS given we are at an BFS already is as follows</span></strong><span>:</span></p><ul>
+<li><span>Select a non basic variable with negative coefficient in the objective function since assigning a positive value to it will drive the objective function down - entering variable</span></li>
+<li><span>Inroduce this variable in the basis by removing a basic variable from the equation where the coefficient of the entering variable is negative - leaving variable</span></li>
+<li><span>Perform Gaussian Elimination to get to the form of a basic solution and do the same with the objective function by expressing it in terms of only the non basic variables.</span></li>
+<li><strong><span>When we reach a point where objective function is of the form </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-836">c_{0}+\sum c_{i}x_{i}</script></span><span> where all </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-837">c_{i} \geq 0</script></span><span>, we have reached the optimal solution. This is true because we cannot bring down the objective function any further since assigning a positive value to any of the variables will increase the objective function.</span></strong></li>
+</ul><h4 id="Things-to-keep-in-mind" data-id="Things-to-keep-in-mind"><a class="anchor hidden-xs" href="#Things-to-keep-in-mind" title="Things-to-keep-in-mind"><span class="octicon octicon-link"></span></a><span>Things to keep in mind:</span></h4><ul>
+<li>
+<p><span>For the entering variable, we the swap the variable in the equation with minimum</span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-838">\frac{b_i}{ -(\text{coeff of entering variable})}</script></span><span> so that we ensure that </span><script type="math/tex" id="MathJax-Element-839">b_{i}</script></span><span> s remain non-negative.</span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="https://i.imgur.com/oEeQEGz.jpg" width="300"><img src="https://i.imgur.com/J4AnbZF.jpg" width="300"></p>
+</li>
+<li>
+<p><span>If at a point we find, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-840">b_{i} = 0</script></span><span>, we might get stuck between BFS with same value. To ensure termination in this situation, we can use the following methods:-</span></p>
+<ul>
+<li><span>Bland Rule - Selecting the first entering variable lexicographically</span></li>
+<li><span>Lexicographic pivoting rule</span></li>
+<li><span>Perturbation methods</span></li>
+</ul>
+</li>
+<li>
+<p><span>If at a point we see that the variable we have chosen to insert in the basis has no negative coefficient in the constraint equations, it means that we can drive the value of the variable arbitarily low without violating any of the non negativity constraints. This implies that the linear program is unbounded and hence impractical.</span></p>
+</li>
+</ul><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/tVnRl5Y.jpg" width="300"></p><hr><h3 id="Matrix-representation" data-id="Matrix-representation"><a class="anchor hidden-xs" href="#Matrix-representation" title="Matrix-representation"><span class="octicon octicon-link"></span></a><span>Matrix representation</span></h3><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/H5cjUTX.jpg" width="600" height="300"></p><h3 id="Simplex-algorithm-in-matrix-notation" data-id="Simplex-algorithm-in-matrix-notation"><a class="anchor hidden-xs" href="#Simplex-algorithm-in-matrix-notation" title="Simplex-algorithm-in-matrix-notation"><span class="octicon octicon-link"></span></a><span>Simplex algorithm in matrix notation</span></h3><ol>
+<li>
+<p><span>Consider </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-841"> Ax = b </script></span></p>
+</li>
+<li>
+<p><span>Choose m linearly independent columns </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-842">A_{B}</script></span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-843"> Ax = A_{B}x_{B} + A_{N}x_{N} = b </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-844"> A_{B}x_{B} = b - A_{N}x_{N} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-845"> x_{B} = A^{-1}_{B}b - A^{-1}_{B}A_{N}x_{N} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-846"> x_{B} = b^{'} - A^{'}_{N}x_{N} </script></span></p>
+</li>
+<li>
+<p><span class="mathjax"><script type="math/tex" id="MathJax-Element-847">x_{B}</script></span><span> is feasible if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-848">b' \geq 0</script></span></p>
+</li>
+<li>
+<p><span>The matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-849">A_{B}</script></span><span> is called a basis.</span></p>
+</li>
+<li>
+<p><span>Cost for basis B is</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-850"> cx </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-851"> = c_{B}x_{B} + c_{N}x_{N} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-852"> = c_{B}(A^{-1}_{B}b - A^{-1}_{B}A_{N}x_{N}) + c_{N}x_{N} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-853"> = c_{B}A^{-1}_{B}b + (c_{N} - c_{B}A^{-1}_{B}A_{N})x_{N} + (c_{B} - c_{B}A^{-1}_{B}A_{N})x_{B} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-854"> = c_{B}A^{-1}_{B}b + (c - c_{B}A^{-1}_{B}A)x </script></span></p>
+</li>
+<li>
+<p><span>We define </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-855">\prod = c_{B}A^{-1}_{B}</script></span><span> and call it the simplex multiplier.</span><br>
+<span>Therefore, </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-856"> cx = \prod b + (c - \prod A)x </script></span></p>
+</li>
+<li>
+<p><span class="mathjax"><script type="math/tex" id="MathJax-Element-857">\prod b</script></span><span> is the optimal solution when </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-858">c \geq \prod A</script></span><span>.</span></p>
+</li>
+</ol><h4 id="Proof1" data-id="Proof"><a class="anchor hidden-xs" href="#Proof1" title="Proof1"><span class="octicon octicon-link"></span></a><span>Proof:</span></h4><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-859"> cx = \prod b + (c - \prod A)x </script></span><br>
+<span>We have already seen that the coefficients of all the variables being non-negative guarantees that we have reached the optimal solution. Hence in the case of optimal solution,</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-860"> (c - \prod A) \geq 0 \implies c \geq \prod A </script></span></p><p><span>Now, let </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-861"> \prod b = c_{0}^{*} </script></span><br>
+<span>Let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-862">y</script></span><span> be a feasible solution. Then, we have </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-863">Ay = b</script></span><span>.</span><br>
+<span>Hence, </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-864"> cy \geq \prod Ay = \prod b = c_{0}^{*} </script></span><span>.</span></p><h3 id="Converting-to-tableau" data-id="Converting-to-tableau"><a class="anchor hidden-xs" href="#Converting-to-tableau" title="Converting-to-tableau"><span class="octicon octicon-link"></span></a><span>Converting to tableau</span></h3><p><span>Basically, </span><strong><span>in comparison to what we did earlier, we bring the non basic variables too on the LHS and send constant </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-865">c_{0}</script></span><span> in </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-866">z</script></span><span> to RHS whose value will ultimately give the optimal value for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-867">z</script></span><span>.</span></strong><span> Then we make a table out of it to ease our calculations.</span></p><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/lAlHRsh.jpg" width="550" height="300"></p><h3 id="Simplex-algorithm-using-tableau" data-id="Simplex-algorithm-using-tableau"><a class="anchor hidden-xs" href="#Simplex-algorithm-using-tableau" title="Simplex-algorithm-using-tableau"><span class="octicon octicon-link"></span></a><span>Simplex algorithm using tableau</span></h3><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/Pvp7Wbo.jpg" width="550" height="300"></p><p><span>When we see that all coefficients in the first row are non-negative, we have reached the optimal solution. In the given case, it is </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-868">\frac{9}{2}</script></span><span>.</span></p><hr><h1 id="Duality" data-id="Duality"><a class="anchor hidden-xs" href="#Duality" title="Duality"><span class="octicon octicon-link"></span></a><span>Duality</span></h1><h3 id="Primal-and-dual" data-id="Primal-and-dual"><a class="anchor hidden-xs" href="#Primal-and-dual" title="Primal-and-dual"><span class="octicon octicon-link"></span></a><span>Primal and dual</span></h3><p><span>We define the primal and dual as follows:</span></p><h4 id="Primal" data-id="Primal"><a class="anchor hidden-xs" href="#Primal" title="Primal"><span class="octicon octicon-link"></span></a><span>Primal</span></h4><p><strong><span>Minimise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-869">cx</script></span><span> subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-870">Ax \geq b</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-871">x_{j} \geq 0</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-872">1 \leq j \leq n</script></span><span> on the m constraints.</span></strong></p><h4 id="Dual" data-id="Dual"><a class="anchor hidden-xs" href="#Dual" title="Dual"><span class="octicon octicon-link"></span></a><span>Dual</span></h4><p><strong><span>The dual of the primal mentioned above is as follows:</span><br>
+<span>Maximise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-873">yb</script></span><span> subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-875">y_{i} \geq 0</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-876">1 \leq i \leq m</script></span><span> on the n constraints.</span></strong></p><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="https://i.imgur.com/9svi8Sl.jpg" width="550" height="300"></p><h3 id="Weak-Duality-Theorem" data-id="Weak-Duality-Theorem"><a class="anchor hidden-xs" href="#Weak-Duality-Theorem" title="Weak-Duality-Theorem"><span class="octicon octicon-link"></span></a><span>Weak Duality Theorem</span></h3><p><span>For every minimisation linear program, value of objective function of primal is always greater than that of the dual.</span><br>
+<span>For every maximisation linear program, value of objective function of primal is always less than that of the dual.</span><br>
+<strong><span>Proof:</span></strong><br>
+<span>Let x and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-877">\prod_{0}</script></span><span> be feasible solutions to the primal and dual respectively where the primal is a minimisation linear program. We have,</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-878"> c \geq \prod_{0} A  \implies cx \geq \prod_{0} Ax \geq \prod_{0} b </script></span><span>.</span><br>
+<span>Similarly, we can prove the result for maximisation linear program.</span></p><h3 id="Strong-Duality-Theorem" data-id="Strong-Duality-Theorem"><a class="anchor hidden-xs" href="#Strong-Duality-Theorem" title="Strong-Duality-Theorem"><span class="octicon octicon-link"></span></a><span>Strong Duality Theorem</span></h3><p><strong><span>If the primal has an optimal solution, then the dual has an optimal solution with the same cost.</span></strong></p><h4 id="Proof2" data-id="Proof"><a class="anchor hidden-xs" href="#Proof2" title="Proof2"><span class="octicon octicon-link"></span></a><span>Proof:</span></h4><ul>
+<li><span>By weak duality theorem, we can say that since the primal has a feasible solution, dual cannot be unbounded.</span></li>
+<li><span>Now, we already know that for the primal, in the optimal condition, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-879">c \geq \prod A</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-880">\prod</script></span><span> is the simplex multiplier of the primal, which is hence a feasible solution of the dual.</span></li>
+<li><span>Now, from what we have seen for the primal, let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-881">x^{*}</script></span><span> be the optimal solution of primal. Then we have the associated </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-882">x^{*}_{B} = A_{B}^{-1} b</script></span><span>.</span><br>
+<span>The dual has a feasible solution, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-883">y^{*} = \prod = c_{B}A^{-1}_{B}</script></span><span> from previous result. Hence, </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-884"> y^{*}b = c_{B}A^{-1}_{B}b = c_{B}x^{*} </script></span><span> Now, we can say that a feasible solution of the dual has the same cost as that of the optimal solution of the primal and since the cost the dual is always </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-885">\leq</script></span><span> cost of the primal, this is indeed the optimal value of the dual too.</span></li>
+</ul><h3 id="Interpretation-and-use" data-id="Interpretation-and-use"><a class="anchor hidden-xs" href="#Interpretation-and-use" title="Interpretation-and-use"><span class="octicon octicon-link"></span></a><span>Interpretation and use</span></h3><h4 id="Bounding" data-id="Bounding"><a class="anchor hidden-xs" href="#Bounding" title="Bounding"><span class="octicon octicon-link"></span></a><span>Bounding</span></h4><h5 id="Can-we-find-an-upper-bound-to-the-objective-function-we-want-to-maximise-maximal-case" data-id="Can-we-find-an-upper-bound-to-the-objective-function-we-want-to-maximise-maximal-case"><a class="anchor hidden-xs" href="#Can-we-find-an-upper-bound-to-the-objective-function-we-want-to-maximise-maximal-case" title="Can-we-find-an-upper-bound-to-the-objective-function-we-want-to-maximise-maximal-case"><span class="octicon octicon-link"></span></a><span>Can we find an upper bound to the objective function we want to maximise (maximal case)?</span></h5><ul>
+<li><span>Yes, we can try to make a linear combination of the constraints so that each coefficient in this combination is greater than the coefficient of the corresponding variable in the objective function. The value of this combination will be an upper bound to the objective function as  </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-886">\forall i</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-887">x_{i} \geq 0</script></span><span> (non-negativity constraint).</span><br>
+<img src="https://i.imgur.com/ATfmvrs.jpg" width="310" height="300"><span> </span><img src="https://i.imgur.com/6LfYT5T.jpg" width="310" height="300"><img src="https://i.imgur.com/94Z8OBv.jpg" width="70" height="300"></li>
+<li><span>We then try to minimise the value of this combination which can be treated as an objective function with the value of constraints of the original LP as the decision variables. (Does this ring any bells?)</span></li>
+<li><span>Yes, it is basically minimising the dual’s objective function.</span></li>
+</ul><h4 id="Complementary-Slackness" data-id="Complementary-Slackness"><a class="anchor hidden-xs" href="#Complementary-Slackness" title="Complementary-Slackness"><span class="octicon octicon-link"></span></a><span>Complementary Slackness</span></h4><p><span>The primal being: minimise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-888">cx</script></span><span> subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-889">Ax \geq b</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-890">x_{j} \geq 0</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-891">1 \leq j \leq n</script></span><span> on the m constraints,</span><br>
+<span>and the dual being: maximise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-892">yb</script></span><span> subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-893">A^{T}y \leq c</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-894">y_{i} \geq 0</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-895">1 \leq i \leq m</script></span><span> on the n constraints.</span><br>
+<span>Let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-896">x^{*}</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-897">y^{*}</script></span><span> be the optimal solutions to the primal and the dual respectively. The following conditions are necessary and sufficient for the optimality of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-898">x^{*}</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-899">y^{*}</script></span><span>:</span></p><ul>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-900">\sum_{j=1}^n a_{ij}</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-901">x_{j}^{*} = b_{i}</script></span><span> or </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-902">y_{i}^{*} = 0</script></span><span> for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-903">1 \leq i \leq m</script></span><span>, and</span></li>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-904">\sum_{i=1}^m a_{ji}</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-905">y_{i}^{*} = c_{i}</script></span><span> or </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-906">x_{j}^{*} = 0</script></span><span> for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-907">1 \leq j \leq n</script></span></li>
+</ul><p><strong><span>Proof:</span></strong><br>
+<span>Using the fact that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-908">x^{*T}A^{T} y^{*}</script></span><span> is a </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-909">1 × 1</script></span><span> matrix, </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-910"> x^{*T}A^{T} y^{*} = (x^{*T}A^{T} y^{*})^{T} = y^{*T}Ax^{*} </script></span><span>.  Now by Strong Duality, as </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-911">x</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-912">y</script></span><span> are both optimal to their respective LPs,</span></p><p><span class="mathjax"><script type="math/tex" id="MathJax-Element-913">cx^{*} = by^{*}</script></span><span> &nbsp; and &nbsp; </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-914">cx^{*} = x^{*T} c \geq x^{*T}A^{T} y^{*} = y^{*T}Ax^{*} \geq y^{*T}b = by^{*}</script></span><span> (from weak duality)</span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-915">\Longleftrightarrow</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-916">cx^{*} = x^{*T} c = x^{*T}A^{T} y^{*} = y^{*T}Ax^{*} = y^{*T}b = by^{*}</script></span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-917">\Longleftrightarrow x^{*}(A^{T}y^{*} − c) = 0</script></span><span> &nbsp; and &nbsp; </span><script type="math/tex" id="MathJax-Element-918">y^{*}(b − Ax^{*}) = 0</script></span><span>.</span></p><p><span>We note that </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-919"> 0 = x^{*}(A^{T} y^{*} − c) = \sum_{j=1}^{n}(x^{*}_{j}(\sum_{i=1}^{m}a_{ji}y^{*}_{i}-c_{j})) </script></span></p><p><span>But, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-920">x^{*}_{j}\geq 0</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-921">(\sum_{i=1}^{m}a_{ji}y^{*}_{i}-c_{j})\geq0 \implies</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-922">x^{*}_{j}(\sum_{i=1}^{m}a_{ji}y^{*}_{i}-c_{j}) = 0</script></span><span> for each </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-923">j = 1, 2, . . . , n</script></span></p><p><span>Similarly, we deduce that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-924">y^{*}(b − Ax^{*}) = 0</script></span><span> iff </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-925">y^{*}_{i}(\sum_{j=1}^{n}a_{ij}x^{*}_{j}-b_{i}) = 0</script></span><span> for each </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-926">i = 1, 2, . . . , m</script></span></p><h4 id="A-sample-demonstration" data-id="A-sample-demonstration"><a class="anchor hidden-xs" href="#A-sample-demonstration" title="A-sample-demonstration"><span class="octicon octicon-link"></span></a><span>A sample demonstration:</span></h4><p><span>Let the primal be to maximise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-927">4x_{1}+x_{2}+5x_{3}+3x_{4}</script></span><span> with the following constraints:</span></p><p><span class="mathjax"><script type="math/tex" id="MathJax-Element-928">\begin{bmatrix} 1\\5\\-1 \end{bmatrix}x_{1}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-929">\begin{bmatrix} -1\\1\\2 \end{bmatrix}x_{2}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-931">\begin{bmatrix} 3\\8\\-5 \end{bmatrix}x_{4} \leq \begin{bmatrix} 1\\55\\3 \end{bmatrix}</script></span></p><p><span>After including the dual variables <br></span><span class="mathjax"><script type="math/tex" id="MathJax-Element-933">\begin{bmatrix} \boxed{1y_{1}}\\5y_{2}\\-1y_{3} \end{bmatrix}\boxed{x_{1}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-934">\begin{bmatrix} \boxed{-1y_{1}}\\1y_{2}\\2y_{3} \end{bmatrix}\boxed{x_{2}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-935">\begin{bmatrix} \boxed{-1y_{1}}\\3y_{2}\\3y_{3} \end{bmatrix}\boxed{x_{3}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-936">\begin{bmatrix} \boxed{3y_{1}}\\8y_{2}\\-5y_{3} \end{bmatrix}\boxed{x_{4}} \leq \begin{bmatrix} \boxed{1y_{1}}\\55y_{2}\\3y_{3} \end{bmatrix}</script></span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="mathjax"><script type="math/tex" id="MathJax-Element-941">= \begin{bmatrix} 4x_{1}\\1x_{2}\\5x_{3}\\3x_{4} \end{bmatrix} \leq  \begin{bmatrix} \boxed{1x_{1}}\\\boxed{-1x_{2}}\\\boxed{-1x_{3}}\\\boxed{3x_{4}} \end{bmatrix}\boxed{y_{1}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-942">\begin{bmatrix} 5x_{1}\\1x_{2}\\3x_{3}\\8x_{4} \end{bmatrix}y_{2}</script></span><span> + </span>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-943">\begin{bmatrix} -1x_{1}\\2x_{2}\\3x_{3}\\-5x_{4} \end{bmatrix}y_{3}</script></span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></p><p><span>However, the extreme l.h.s and the extreme r.h.s are the same thing which forces equality in the intermediate inequalities. Thus,</span></p><p><span class="mathjax"><script type="math/tex" id="MathJax-Element-947">\begin{bmatrix} \boxed{1y_{1}}\\5y_{2}\\-1y_{3} \end{bmatrix}\boxed{x_{1}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-948">\begin{bmatrix} \boxed{-1y_{1}}\\1y_{2}\\2y_{3} \end{bmatrix}\boxed{x_{2}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-949">\begin{bmatrix} \boxed{-1y_{1}}\\3y_{2}\\3y_{3} \end{bmatrix}\boxed{x_{3}}</script></span><span> + </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-950">\begin{bmatrix} \boxed{3y_{1}}\\8y_{2}\\-5y_{3} \end{bmatrix}\boxed{x_{4}}  = \begin{bmatrix} \boxed{1y_{1}}\\55y_{2}\\3y_{3} \end{bmatrix}</script></span></p><p><span>which makes it clear that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-951">1y_{1}x_{1} - 1y_{1}x_{2} - 1y_{1}x_{3} + 3y_{1}x_{4} = 1y_{1} \implies y_{1} (x_{1} - x_{2} - x_{3} + 3x_{4}) = 0</script></span><span> and similar deductions for other rows.</span></p><ul>
+<li><span>This basically means that for </span><strong><span>the optimal case, either the value of a decision variable of primal is </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-952">0</script></span><span> or the corresponding slack in the dual is </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-953">0</script></span></strong><span>.</span></li>
+<li><span>We can use this property of complementary slackness to get optimal solution to the primal in cases like when we have the optimal solution and the values of dual variables. An example is given below where </span><span class="mathjax"> <script type="math/tex" id="MathJax-Element-954">x_{j}</script></span><span>'s and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-955">u_{i}</script></span><span>'s are the primal’s and dual’s decision variables respectively and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-956">s_{i}</script></span><span>'s and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-957">e_{j}</script></span><span>'s are slack variables in primal and dual respectively.</span></li>
+</ul><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="https://i.imgur.com/5pQ439x.jpg" width="600" height="250"></p><ul>
+<li><span>We can also use it to check the optimality of a solution.</span></li>
+</ul><h4 id="Duality-in-the-Tableau" data-id="Duality-in-the-Tableau"><a class="anchor hidden-xs" href="#Duality-in-the-Tableau" title="Duality-in-the-Tableau"><span class="octicon octicon-link"></span></a><span>Duality in the Tableau</span></h4><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="https://i.imgur.com/SWRldN3.jpg" width="600" height="300"></p><blockquote>
+<h3 id="How-to-take-dual-shown-for-maximal-primal" data-id="How-to-take-dual-shown-for-maximal-primal"><a class="anchor hidden-xs" href="#How-to-take-dual-shown-for-maximal-primal" title="How-to-take-dual-shown-for-maximal-primal"><span class="octicon octicon-link"></span></a><span>How to take dual? (shown for maximal primal)</span></h3>
+</blockquote><table>
+<thead>
+<tr>
+<th><span>Primal</span></th>
+<th><span>Dual</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-958">x_1, x_2, ... x_n</script></span></td>
+<td><span>n constraints</span></td>
+</tr>
+<tr>
+<td><span>m constraints</span></td>
+<td><span>variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-959">y_1, y_2, ... y_m</script></span></td>
+</tr>
+<tr>
+<td><span>objective function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-960">c</script></span></td>
+<td><span>r.h.s of constraints &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+</tr>
+<tr>
+<td><span>r.h.s </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-961">b</script></span><span> of constraints &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+<td><span>objective function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-962">b</script></span></td>
+</tr>
+<tr>
+<td><span>max </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-963">c^Tx</script></span></td>
+<td><span>min </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-964">b^Ty</script></span></td>
+</tr>
+<tr>
+<td><span>constraint matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-965">A</script></span></td>
+<td><span>constraint matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-966">A^T</script></span></td>
+</tr>
+<tr>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-967">i^{th}</script></span><span> constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-968">\leq</script></span></td>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-969">y_i \geq 0</script></span></td>
+</tr>
+<tr>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-970">i^{th}</script></span><span> constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-971">\geq</script></span></td>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-972">y_i \leq 0</script></span></td>
+</tr>
+<tr>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-973">i^{th}</script></span><span> constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-974">=</script></span></td>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-975">y_i \in R</script></span></td>
+</tr>
+<tr>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-976">x_j \geq 0</script></span></td>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-977">j^{th}</script></span><span> constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-978">\geq</script></span></td>
+</tr>
+<tr>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-979">x_j \leq 0</script></span></td>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-980">j^{th}</script></span><span> constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-981">\leq</script></span></td>
+</tr>
+<tr>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-982">x_j \in R</script></span></td>
+<td><span class="mathjax"><script type="math/tex" id="MathJax-Element-983">j^{th}</script></span><span> constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-984">=</script></span></td>
+</tr>
+</tbody>
+</table><hr><h1 id="Some-Applications" data-id="Some-Applications"><a class="anchor hidden-xs" href="#Some-Applications" title="Some-Applications"><span class="octicon octicon-link"></span></a><span>Some Applications</span></h1><h2 id="Max-flow--Min-cut-Problem" data-id="Max-flow--Min-cut-Problem"><a class="anchor hidden-xs" href="#Max-flow--Min-cut-Problem" title="Max-flow--Min-cut-Problem"><span class="octicon octicon-link"></span></a><span>Max-flow / Min-cut Problem</span></h2><h3 id="What-is-the-max-flow-problem" data-id="What-is-the-max-flow-problem"><a class="anchor hidden-xs" href="#What-is-the-max-flow-problem" title="What-is-the-max-flow-problem"><span class="octicon octicon-link"></span></a><span>What is the max-flow problem?</span></h3><p><span>A </span><strong><span>flow network</span></strong><span> is a directed graph </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-985">G</script></span><span> with vertices </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-986">V</script></span><span> and edges </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-987">E</script></span><span> ech of which is associated with a capacity </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-988">c_{e}</script></span><span>, which assigns each edge </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-989">e∈E</script></span><span> a non-negative integer value. One of its verties is a source and one is sink.</span></p><p><span>A </span><strong><span>flow</span></strong><span> in a flow network can be denoted by a function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-990">f</script></span><span>, that assigns each edge </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-991">e</script></span><span> a non-negative integer value, namely the flow. The function has to satisfy the following conditions:</span></p><ul>
+<li><strong><span>Capacity constraint:</span></strong><span> The flow of an edge cannot exceed its capacity.</span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-992">f(e)≤c_{e}</script></span></li>
+<li><strong><span>Conservation Constraint:</span></strong><span> The sum of the incoming flow of a vertex </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-993">u</script></span><span> has to be equal to the sum of the outgoing flow of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-994">u</script></span><span> except for the source and sink vertices. Hence,</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-995"> ∑_{(v,u)∈E}f((v,u))=∑_{(u,v)∈E}f((u,v)) </script></span></li>
+<li><span>The source vertex s has only an outgoing flow, and the sink vertex t has only incoming flow.</span></li>
+<li><span>Also for s being the source and t being the sink, the ourgoing flow of source should be equal to the incoming flow of sink which is basically the flow of the network.</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-996"> ∑_{(s,u)∈E}f((s,u))=∑_{(u,t)∈E}f((u,t)) </script></span></li>
+<li><span>Without loss of generality, we take that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-997">s</script></span><span> has no incoming edges and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-998">t</script></span><span> has no outgoing edges.</span></li>
+</ul><p><strong><span>A maximal flow is a flow with the maximal possible value. Our goal is to find this maximal flow of a flow network.</span></strong><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/pUXBlHH.jpg" width="500" height="200"></p><p><span>The maximal flow of 10 in the above flow network is as follows:</span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/C1VGyuu.jpg" width="500" height="200"></p><h3 id="Why-care-about-it" data-id="Why-care-about-it"><a class="anchor hidden-xs" href="#Why-care-about-it" title="Why-care-about-it"><span class="octicon octicon-link"></span></a><span>Why care about it?</span></h3><p><span>The maximum flow problem can model the routing of traffic through a transportation network, data packets through a network, or oil through a pipeline network. Problems like bipartite matching and image segmentation reduce to the maximum flow problem.</span></p><h3 id="Algorithms1" data-id="Algorithms"><a class="anchor hidden-xs" href="#Algorithms1" title="Algorithms1"><span class="octicon octicon-link"></span></a><span>Algorithms</span></h3><ul>
+<li>
+<h4 id="Naive-Greedy-Algorithm" data-id="Naive-Greedy-Algorithm"><a class="anchor hidden-xs" href="#Naive-Greedy-Algorithm" title="Naive-Greedy-Algorithm"><span class="octicon octicon-link"></span></a><span>Naive Greedy Algorithm</span></h4>
+<ul>
+<li><span>The greedy approach to the max-flow problem can be to start with zero flow for all edges and greedily proceed from one flow to the next to send more flow on some path from s to t. However, this might not give the max-flow all the time.</span></li>
+</ul>
+</li>
+</ul><blockquote>
+<p><em><strong><span>Concept of Residual Graph</span></strong></em><br>
+<em><span>Residual edges are edges in the opposite direction of flow of original edge from one vertex to other with initial flow/capacity of 0/0. Residual graph contains residual edges along with the original edges.</span></em><br>
+<em><span>An augmenting path is a path of edges in the residual graph with unused capacity greater than zero from the source s to the sink t.</span></em><br>
+<em><span>Every augmenting path has a bottleneck value and that can be used to augment the flow.</span></em><br>
+<em><span>However, till now we could only increase flow in an edge using the bottleneck but we might need to undo the update by decreasing the flow for augmenting paths that donot give max flow. We do this by using residual edges in a way that increasing the negative flow in an residual edge decreases flow in original edge.</span></em></p>
+</blockquote><ul>
+<li>
+<h4 id="Ford-Fulkerson-Algorithm" data-id="Ford-Fulkerson-Algorithm"><a class="anchor hidden-xs" href="#Ford-Fulkerson-Algorithm" title="Ford-Fulkerson-Algorithm"><span class="octicon octicon-link"></span></a><span>Ford-Fulkerson Algorithm</span></h4>
+<ul>
+<li><span>In this algorithm, we find augmenting paths through the residual graph repeatedly and augment the flow till no more augmenting paths can be found.</span></li>
+<li><span>Time complexity of this algorithm is </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-999">O(maxflow * E)</script></span><span> since we run a loop while there is an augmenting path and in worst case, we may add 1 unit flow in every iteration.</span></li>
+</ul>
+</li>
+</ul><pre><code>initialize f_e = 0 for all e ∈ E
+repeat
+search for an s-t path P in the current residual graph G_f such that
+every edge of P has residual capacity &gt; 0
+// takes O(|E|) time using BFS or DFS
+if no such path then
+    halt with current flow {f_e} e ∈ E
+else
+    diff = min e ∈ P (e’s residual capacity in G_f )
+    // augment the flow f using the path P
+    for all edges e of G whose corresponding forward edge is in P
+    increase f_e by diff
+    for all edges e of G whose corresponding reverse edge is in P
+    decrease f_e by diff
+</code></pre><h3 id="Max-flow-as-a-Linear-Program" data-id="Max-flow-as-a-Linear-Program"><a class="anchor hidden-xs" href="#Max-flow-as-a-Linear-Program" title="Max-flow-as-a-Linear-Program"><span class="octicon octicon-link"></span></a><span>Max-flow as a Linear Program</span></h3><ol>
+<li><strong><span>Decision variables:</span></strong><span> We trying to solve for a flow, specifically, the amount </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1000">f_e</script></span><span> of flow on each edge e. So, our variables are just </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1001">{f_e }</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1002">e ∈ E</script></span><span>.</span></li>
+<li><strong><span>Constraints:</span></strong><span> Taking </span><span class="mathjax"> <script type="math/tex" id="MathJax-Element-1003">\delta^-(v)</script></span><span> as the set of all incoming edges into vertex </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1005">\delta^+(v)</script></span><span> as set of outgoing edges from vertex </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1006">v</script></span><span>, conservation constraints and capacity constraints which can be written as</span>
+<ul>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-1007">\sum_{e \in \delta^-(v)} f_e - \sum_{e \in \delta^+(v)} f_e = 0</script></span><span> for every vertex </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1008">v\neq s, t</script></span><span>.</span></li>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-1009">f_e ≤ u_e</script></span><span> for every edge </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1010">e ∈ E</script></span><span>.</span></li>
+<li><span>We also need to add nonnegativity constraints: </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1011">f_e \geq 0</script></span><span> for every edge </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1012">e ∈ E</script></span><span>.</span></li>
+<li><span>It can be seen that every one of these </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1013">2m + n − 2</script></span><span> constraints (where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1014">m = |E|</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1015">n = |V|</script></span><span>) is linear.</span></li>
+</ul>
+</li>
+<li><strong><span>Objective function:</span></strong><span> max </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1016">\sum_{e \in \delta^+(s)}f_e</script></span><span> which is also a linear function.</span></li>
+</ol><h3 id="Max-flow-min-cut-theorem" data-id="Max-flow-min-cut-theorem"><a class="anchor hidden-xs" href="#Max-flow-min-cut-theorem" title="Max-flow-min-cut-theorem"><span class="octicon octicon-link"></span></a><span>Max-flow min-cut theorem</span></h3><p><span>Max-flow min-cut theorem states that in a flow network, the maximum amount of flow passing from the source s to the sink t is equal to the total weight of the edges in a minimum cut.</span></p><h3 id="Max-flowmin-cut-theorem-via-duality" data-id="Max-flowmin-cut-theorem-via-duality"><a class="anchor hidden-xs" href="#Max-flowmin-cut-theorem-via-duality" title="Max-flowmin-cut-theorem-via-duality"><span class="octicon octicon-link"></span></a><span>Max-flow/min-cut theorem via duality</span></h3><blockquote>
+<p><strong><span>Concept of s-t cut</span></strong><br>
+<span>An s-t cut </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1017">C = (S, T)</script></span><span> is a partition of vertex set V of the flow network such that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1018">s ∈ S</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1019">t ∈ T</script></span><span>. Basically, an s-t cut is a division of the vertices of a network into two parts, with the source in one part and the sink in the other.</span><br>
+<span>Capacity of an s-t cut: The capacity of an s–t cut is defined as the sum of the capacity of each edge in the set containing edges going from the source’s side to the sink’s side.</span></p>
+</blockquote><h4 id="Minimum-s-t-Cut-Problem" data-id="Minimum-s-t-Cut-Problem"><a class="anchor hidden-xs" href="#Minimum-s-t-Cut-Problem" title="Minimum-s-t-Cut-Problem"><span class="octicon octicon-link"></span></a><span>Minimum s-t Cut Problem</span></h4><p><span>Finding an s-t cut whose the capacity of is minimal. It can also be thought of as finding the the smallest total weight of the edges which if removed, would disconnect the source from the sink. The s-t cut found is called the minimum cut.</span></p><h4 id="Duality-view-of-the-theorem" data-id="Duality-view-of-the-theorem"><a class="anchor hidden-xs" href="#Duality-view-of-the-theorem" title="Duality-view-of-the-theorem"><span class="octicon octicon-link"></span></a><span>Duality view of the theorem</span></h4><ul>
+<li>
+<p><strong><span>The Primal</span></strong><br>
+<span>To model the primal, we take path decompositions this time rather than flows. So, the decision variables, denoting the flow through the path p, have the form </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1020">f_p</script></span><span> , where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1021">p</script></span><span> is a path from source s to sink t. Let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1022">P</script></span><span> denote the set of all such paths. Now, there is no need to explicitly state the conservation constraints. Thus our problem now is to maximise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1023">\sum_{p \in P}</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1024">f_{p}</script></span><span> subject to:</span></p>
+<ul>
+<li><span>Total flow on </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1025">e \leq</script></span><span> capacity of e, i.e., </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1026">\sum_{p \in P: e \in p} f_{p} \leq c_{e}</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1027">\forall e \in E</script></span></li>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-1028">f_{p} \geq 0</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1029">\forall</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1030">p \in P</script></span></li>
+<li><span>In matrix form, it is maximising </span><em><span class="mathjax"><script type="math/tex" id="MathJax-Element-1031">1^{T}f</script></span></em><span> where </span><em><span class="mathjax"><script type="math/tex" id="MathJax-Element-1032">1</script></span></em><span> is the p dimensional vector </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1033">\begin{bmatrix}1\\1\\.\\.\\.\\1\end{bmatrix}</script></span><br>
+<span>subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1034">Af\leq c</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1035">f \geq 0</script></span><span>.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>The Dual</span></strong><br>
+<span>The dual can written as follows in matrix form taking </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1036">l_e</script></span><span> as the decision variables:</span></p>
+<ul>
+<li>
+<p><span>Minimise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1037">c^{T}l</script></span><span> subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1038">\sum_{e \in p} l_e \geq 1</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1039">\forall</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1040">p \in P</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1041">l_e \geq 0</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1042">\forall e \in E</script></span></p>
+</li>
+<li>
+<p><span>The key observation is that every s-t cut corresponds to a feasible solution to this dual linear program. To see this, we fix a cut </span><span class="mathjax">><script type="math/tex" id="MathJax-Element-1043">(S, T)</script></span><span>, with </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1044">s ∈ S</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1045">t ∈ T</script></span><span>, and set</span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-1046">l_e = 1</script></span><span> if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1047">e \in \delta^{+}(S)</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1048">\delta^{+}(S)</script></span><span> is the set of outgoing edges from S and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1049">0</script></span><span> otherwise.</span></p>
+</li>
+<li>
+<p><span>We can see that the constraints are satisfied as </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1050">l_e</script></span><span> being either 0 or 1 satisfies the non-negativity constraint and as every s-t path must cross the cut </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1051">(S, T)</script></span><span> at some point since it starts in S and ends in T. Thus, every s-t path has at least one edge e with </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1052">l_e = 1</script></span><span>.</span></p>
+</li>
+<li>
+<p><span>The objective function is hence </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1053">\sum_{e \in p}c_el_e =</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1055">(S,T)</script></span><span>.</span></p>
+</li>
+<li>
+<p><span>Hence, the dual is basically minimising the capacity of s-t cuts in the flow network. This is the minimal-cut problem.</span></p>
+</li>
+<li>
+<p><span>However, we have considered onlt the 0-1 solutions of the dual. So, by weak duality we can say that,</span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-1056">max-flow = optimal \; value \; of \; primal \leq optimal \; value \; of \; dual \leq min-cut</script></span><span>.</span></p>
+</li>
+<li>
+<p><span>By strong duality, if a max-flow value exists, then it must be equal to the min-cut value.</span></p>
+</li>
+</ul>
+</li>
+</ul><hr><h2 id="Minimum-Cost-flow" data-id="Minimum-Cost-flow"><a class="anchor hidden-xs" href="#Minimum-Cost-flow" title="Minimum-Cost-flow"><span class="octicon octicon-link"></span></a><span>Minimum-Cost flow</span></h2><h3 id="What-is-the-mininum-cost-flow-problem" data-id="What-is-the-mininum-cost-flow-problem"><a class="anchor hidden-xs" href="#What-is-the-mininum-cost-flow-problem" title="What-is-the-mininum-cost-flow-problem"><span class="octicon octicon-link"></span></a><span>What is the mininum cost flow problem?</span></h3><p><span>In the minimum cost flow problem, we have:</span></p><ul>
+<li><span>a directed graph </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1057">G = (V, E)</script></span></li>
+<li><span>a source </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1058">s ∈ V</script></span><span> and sink </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1059">t ∈ V</script></span></li>
+<li><span>a target flow value </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1060">d</script></span></li>
+<li><span>a nonnegative capacity </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1062">e ∈ E</script></span></li>
+<li><span>a real-valued cost per flow unit </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1063">c_e</script></span><span> for each edge </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1064">e ∈ E</script></span><span>.</span></li>
+</ul><p><span>The goal is to compute a flow </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1065">f</script></span><span> with value </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1066">d</script></span><span> i.e., pushing </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1067">d</script></span><span> units of flow from s to t, subject to the usual conservation and capacity constraints so that the cost is minimised, i.e., </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1068">min \sum _{e \in E} c_e f_e</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1069">e \in E</script></span><span>.</span></p><p><span>It is to be noted that for each edge </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1070">e</script></span><span> that since </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1071">c_e</script></span><span> is “per-flow unit” cost, the contribution of edge </span><span class="mathjax">><script type="math/tex" id="MathJax-Element-1072">e</script></span><span> to the overall cost with </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1073">f_e</script></span><span> units of flow is </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1074">c_e f_e</script></span><span>.</span></p><h3 id="Minimum-Cost-Flow-as-Linear-Program" data-id="Minimum-Cost-Flow-as-Linear-Program"><a class="anchor hidden-xs" href="#Minimum-Cost-Flow-as-Linear-Program" title="Minimum-Cost-Flow-as-Linear-Program"><span class="octicon octicon-link"></span></a><span>Minimum Cost Flow as Linear Program</span></h3><p><span>Taking the minimum cost flow problem as defined earlier, the linear objective function is simply</span></p><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1075"> min \sum _{e \in E} c_e f_e </script></span></p><p><span>where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1076">e \in E</script></span><span> as defined earlier.</span><br>
+<span>We need to add the following constraint to the usual capacity and conservation constraints:</span></p><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1077"> \sum_{e \in \delta^{+}(s)} f_e = d </script></span><span> where d is the target flow value.</span></p><p><span>The flexibility of linear programs can seen from the fact that if we want to impose a lower bound, say </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1078">l_e</script></span><span> on the amount of flow on each edge e, in addition to the usual upper bound </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1080">“f_e ≥ 0”</script></span><span> by </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1081">f_e ≥ l_e</script></span><span> .</span></p><hr><h2 id="Linear-Regression" data-id="Linear-Regression"><a class="anchor hidden-xs" href="#Linear-Regression" title="Linear-Regression"><span class="octicon octicon-link"></span></a><span>Linear Regression</span></h2><img src="https://i.imgur.com/RqzAmls.jpg" width="600" height="250"><h3 id="The-problem" data-id="The-problem"><a class="anchor hidden-xs" href="#The-problem" title="The-problem"><span class="octicon octicon-link"></span></a><span>The problem</span></h3><p><span>We want to fit a line to data points. It is frequently used in basic problems in machine learning. Formally, the input consists of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1082">m</script></span><span> data points </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1083">p_1 , . . . , p_m ∈ R^d</script></span><span>, each with </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1084">d</script></span><span> real-valued “features” (coordinates). These coordinates can be thought of as properties of your data, say for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1085">d = 3</script></span><span>, it can be the profession, income and numer of years of experience of an employee.</span></p><p><span>The input also consists of a “label”:  </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1086">l_i ∈ R</script></span><span> for each point </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1087">p_i</script></span><span> which for example, can be the expenditure of the employee. Thus, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1088">l_i</script></span><span> can be thought of as the output we get from our data model for a particular point </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1089">p_i</script></span><span>.</span><br>
+<span>The </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1090">p_i</script></span><span>'s and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1091">l_i</script></span><span>'s are fixed and are parts of the input. They are not decision variables.</span></p><p><span>Informally, the goal is to express the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1092">l_i</script></span><span>'s as effectively as possible as a linear function of the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1093">p_i</script></span><span>'s.</span><br>
+<span>Thus, the goal is to compute a linear function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1094">h : R^d → R</script></span><span> such that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1095">h(p_i) ≈ l_i</script></span><span> for every data point </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1096">p_i</script></span><span>.</span></p><p><span>Computing a “best-fit” linear function finds common use in prediction and data analysis.</span></p><ul>
+<li><span>In the case of prediction, we use labeled data to identify a linear function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1097">h</script></span><span> that, at least for data points whose labels are known, does a good job of predicting the label </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1098">l_i</script></span><span> from the feature values </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1099">p_i</script></span><span>.</span><br>
+<span>Then we hope that this linear function also makes accurate predictions for other data points for which the label is not already known, i.e., assuming it “generalises”.</span></li>
+<li><span>In the case of data analysis, the goal is to understand the relationship between each feature of the data points and the labels, and also the relationships between the different features. As a simple example, it might be interesting to know when one of the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1100">d</script></span><span> features is much more strongly correlated with the label </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1101">l_i</script></span><span> than any of the others.</span></li>
+</ul><h3 id="Linear-Regression-as-LP" data-id="Linear-Regression-as-LP"><a class="anchor hidden-xs" href="#Linear-Regression-as-LP" title="Linear-Regression-as-LP"><span class="octicon octicon-link"></span></a><span>Linear Regression as LP</span></h3><p><span>We now show that computing the best line, for one definition of “best-fit” reduces to linear programming.</span></p><p><span>Every linear function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1102">h : R^d → R</script></span><span> has the form:</span></p><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1103"> h(z) = \sum_{j=1} ^{d} a_jz_j + b </script></span></p><p><span>for coefficients </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1106">a_j</script></span><span> and b can be taken as the decision variables.</span></p><h4 id="But-what’s-our-objective-function" data-id="But-what’s-our-objective-function"><a class="anchor hidden-xs" href="#But-what’s-our-objective-function" title="But-what’s-our-objective-function"><span class="octicon octicon-link"></span></a><span>But, what’s our objective function?</span></h4><p><span>Clearly if the data points are colinear we would want to compute the line that passes through all of them. But that is an ideal case, so we must compromise between how well we approximate different points.</span></p><ul>
+<li>
+<p><span>For a given choice of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1107">a_1, . . . , a_d</script></span><span>, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1108">b</script></span><span>, we define the error on point </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1109">i</script></span><span> as:</span></p>
+<p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1110"> E_{p_i} (a,b) = | (\sum_{j=1} ^{d} a_jp_{ij} - b) - l_i | </script></span></p>
+<p><span>where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1111">p_{ik}</script></span><span> is the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1112">k^{th}</script></span><span> feature in point </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1113">p_i</script></span><span>.</span><br>
+<span>Geometrically, when </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1114">d = 1</script></span><span>, we can think of each </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1115">(p_{i1} , p_i)</script></span><span> as a point on the plane and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1116">E_{p_i} (a,b)</script></span><span> being the vertical distance between this point and the computed line.</span></p>
+</li>
+<li>
+<p><span>Here, we consider the objective function of minimizing the sum of errors:</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1117"> min_{(a, b)} \sum_{i=1}^{m} E_{p_i}(a,b) </script></span></p>
+</li>
+<li>
+<p><span>Consider the problem of choosing a, b to minimize the objective function defined earlier. The problem is that this is not a linear program. The source of nonlinearity is the absolute value sign </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1118">||</script></span><span>. However, these absolute values can be made linear with a simple trick.</span></p>
+<p><span>The trick is to introduce extra variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1119">e_1 , . . . , e_m</script></span><span>, one data point. The intent is for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1120">e_i</script></span><span> to take on the value </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1121">E_{p_i} (a, b)</script></span><span> using the result </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1122">|x| = max(x, −x)</script></span><span>.</span></p>
+</li>
+<li>
+<p><span>Hence, we add two constraints for each data point:</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1123"> e_i \geq [(\sum_{j=1} ^{d} a_jp_{ij} - b) - l_i] </script></span><span> and </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1124"> e_i \geq -[(\sum_{j=1} ^{d} a_jp_{ij} - b) - l_i] </script></span></p>
+<p><span>We change the objective function to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1125">min \sum_{i=1}^m e_i</script></span><span> with decision variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1126">e_1 , . . . , e_m , a_1 , . . . , a_d , b</script></span><span>.</span></p>
+</li>
+<li>
+<p><span>The key point is: at an optimal solution to this linear program, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1127">e_i</script></span><span> must be equal to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1128">E_{p_i} (a, b)</script></span><span> for every data point </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1129">p_i</script></span><span>.</span></p>
+<p><span>Feasibility of the solution already implies that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1131">p_i</script></span><span>. And if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1132">e_i > E_{p_i} (a, b)</script></span><span> for some </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1133">p_i</script></span><span>, then we can decrease </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1134">e_i</script></span><span> slightly so that the constraints still hold, to obtain a superior feasible solution.</span></p>
+</li>
+<li>
+<p><span>Hence, we conclude that an optimal solution to this linear program, we get the line minimizing the sum of errors.</span></p>
+</li>
+</ul><hr><h2 id="Linear-Classifiers" data-id="Linear-Classifiers"><a class="anchor hidden-xs" href="#Linear-Classifiers" title="Linear-Classifiers"><span class="octicon octicon-link"></span></a><span>Linear Classifiers</span></h2><p><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><img src="https://i.imgur.com/yPuc2C8.jpg" width="400" height="250"></p><h3 id="The-problem1" data-id="The-problem"><a class="anchor hidden-xs" href="#The-problem1" title="The-problem1"><span class="octicon octicon-link"></span></a><span>The problem</span></h3><p><span>We are looking for a binary function (from </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1135">R^d \rightarrow {0, 1}</script></span><span>). For example, data points could represent images, and we want to know which ones have a dog and which ones don’t.</span><br>
+<span>Formally, the input consists of m data points </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1136">p^1, . . . , p^m ∈ R^d</script></span><span> labeled </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1137">1</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1138">m'</script></span><span> data points </span><script type="math/tex" id="MathJax-Element-1139">q^1 , . . . , q^m ∈ R^d</script></span><span> labeled </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1140">0</script></span><span>.</span></p><p><span>The goal is to compute a linear function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1141">h(z) = \sum_{j=1} a_j z_j + b</script></span><span> (from </span><span class="mathjax"></span><script type="math/tex" id="MathJax-Element-1142">R^d</script></span><span> to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1143">R</script></span><span>), where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1144">z_k</script></span><span> represents the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1145">k^{th}</script></span><span> feature of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1146">z</script></span><span>, such that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1147">h(p^i) > 0</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1148">h(q^i) < 0</script></span><span>.</span></p><p><span>Geometrically, we are looking for a hyperplane in </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1149">R^d</script></span><span> such that all positive points are on one side and all negative points on the other.  Such a hyperplane can be used for predicting the labels of other unlabeled points by checking which side of the hyperplane it is on. If there is no such hyperplane, an algorithm should correctly report this fact.</span></p><h3 id="Linear-classifier-as-LP" data-id="Linear-classifier-as-LP"><a class="anchor hidden-xs" href="#Linear-classifier-as-LP" title="Linear-classifier-as-LP"><span class="octicon octicon-link"></span></a><span>Linear classifier as LP</span></h3><p><span>The only issue with this problem is that the constraints are strict inequalities, which is not allowed in linear programs.</span></p><p><span>However, we can easily add an extra decision variable.</span></p><ul>
+<li>
+<p><span>The new decision variable </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1150">\delta</script></span><span> represents the “margin” by which the hyperplane satisfies the constraints. So, we have the linear program:</span></p>
+<p><span class="mathjax"><script type="math/tex" id="MathJax-Element-1151">max</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1152">\delta</script></span><span>  subject to</span></p>
+<p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1153"> \sum_{j=1}^da_jp_j^i+b-\delta \geq 0 </script></span><span> for points </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1154">p^1, p^2, ... p^m</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1155"> \sum_{j=1}^da_jp_j^i+b+\delta \leq 0 </script></span><span> for points </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1156">q^1, q^2, ... q^{m'}</script></span></p>
+<p><span>which is a linear program with decision variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1157">\delta, a_1, ... , a_d ,b</script></span><span>.</span></p>
+</li>
+<li>
+<p><span>If the optimal solution to this linear program has strictly positive objective function value, then the values of the variables </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1158">a_1 , . . . , a_d, b</script></span><span> define the desired separating hyperplane.</span><br>
+<span>not, then there is no such hyperplane.</span></p>
+</li>
+<li>
+<p><span>We conclude that computing a linear classifier reduces to linear programming.</span></p>
+</li>
+</ul><hr><h2 id="The-Minimax-theorem-for-two-player-zero-sum-games" data-id="The-Minimax-theorem-for-two-player-zero-sum-games"><a class="anchor hidden-xs" href="#The-Minimax-theorem-for-two-player-zero-sum-games" title="The-Minimax-theorem-for-two-player-zero-sum-games"><span class="octicon octicon-link"></span></a><span>The Minimax theorem for two-player zero-sum games</span></h2><h3 id="Some-useful-definitions" data-id="Some-useful-definitions"><a class="anchor hidden-xs" href="#Some-useful-definitions" title="Some-useful-definitions"><span class="octicon octicon-link"></span></a><span>Some useful definitions</span></h3><ul>
+<li><strong><span>Game</span></strong><span>: A game is defined as a conflict involving gains and losses between two or more opponents who need to follow some formal rules.</span></li>
+<li><strong><span>Strategy</span></strong><span>: A strategy of a player is a complete plan determining which action he/she will take at each stage he is to move.</span><br>
+<strong><span>Strategy is not same as a move.</span></strong><span> A move is an action taken by a player at some point during the play of a game where strategy is a complete algorithm for playing the game, directing a player what to do for every possible situation throughout the game.</span><br>
+<span>Let us denote the set of strategies for a player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1159">i</script></span><span> as </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1160">S_i = \{s_{i1}, s_{i2}, ...,s_{ik}\}</script></span><span>.</span><br>
+<span>For instance, in a rock-paper-scissors game, the set of strategies is {Rock, Paper, Scissors}.</span></li>
+<li><strong><span>Pure Strategy</span></strong><span>: A pure strategy provides a complete definition of how a player will play a game. A player’s strategy set is the set of pure strategies available to that player. We can hence say that a player plays with certainty using a pure startegy.</span><br>
+<span>Considering the definition of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1161">S_i</script></span><span> above, the pure strategies are </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1162">s_{i1}, s_{i2}, ...,s_{ik}</script></span><span>.</span></li>
+<li><strong><span>Mixed Strategy</span></strong><span>: A mixed strategy of a player is a probability distribution over the set of his/her strategies. This allows for a player to randomly select a pure strategy. We can hence say that a player randomises his/her choices using a mixed startegy.</span><br>
+<span>Considering the set of strategies mentioned above,</span><br>
+<span>A mixed strategy </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1163">\sigma_i</script></span><span> for player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1164">i</script></span><span> is a function on </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1165">S_i</script></span><span> such that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1166">0 \leq \sigma_i(s_{ij} ) \leq 1</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1167">\sigma_i(s_{i1}) + \sigma_i(s_{i2}) + ··· + \sigma_i(s_{ik})=1</script></span><span>.</span><br>
+<span>Here </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1169">i</script></span><span> would play.</span><br>
+<span>A pure strategy can be thought of as a specific case of mixed strategy where one of the strategy </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1170">s_{ij}</script></span><span> has </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1171">\sigma_i(s_{ij}) = 1</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1172">\sigma_i(s_{iw}) = 0</script></span><span> for </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1173">w \neq j</script></span><span>.</span></li>
+<li><strong><span>Payoff Matrix</span></strong><span>: An </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1174">m×n</script></span><span> matrix which gives the possible outcome of a two-person zero-sum game when player A has </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1175">m</script></span><span> possible moves and player B has </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1176">n</script></span><span> possible moves.</span></li>
+</ul><h3 id="Zero-Sum-Games" data-id="Zero-Sum-Games"><a class="anchor hidden-xs" href="#Zero-Sum-Games" title="Zero-Sum-Games"><span class="octicon octicon-link"></span></a><span>Zero-Sum Games</span></h3><p><span>A </span><strong><span>zero-sum game</span></strong><span> is a game in which players make payments only to each other. In such a game, one player’s loss is the other player’s gain.</span></p><ul>
+<li><span>A zero-sum game is specified by a real-valued matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1177">m × n</script></span><span> payoff matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1178">A</script></span><span>. Here, we consider the </span><strong><span>two-player zero-sum game</span></strong><span>.</span></li>
+<li><span>One player, the row player, picks a row. The other (column) player picks a column.</span></li>
+<li><span>Each row corresponds to a choice available for the row player and each columnn corresponds to a choice available for the column player.</span></li>
+<li><span>By definition, the entry </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1179">a_{ij}</script></span><span> of the matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1180">A</script></span><span> is the row player’s payoff when the person chooses row </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1181">i</script></span><span> and the column player chooses column </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1182">j</script></span><span>. The column player’s payoff in this case is defined as </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1183">−a_{ij}</script></span><span>, hence the term “zero-sum”.</span></li>
+<li><span>Hence, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1184">a_{ij}</script></span><span> is the amount that the column player pays to the row player in the outcome </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1185">(i, j)</script></span><span>.</span></li>
+<li><span>Thus, the row and column players prefer bigger and smaller numbers in the payoff matrix respectively.</span></li>
+<li><span>A </span><strong><span>two-player game</span></strong><span> is defined by four sets </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1186">(X, Y, A, B)</script></span><span> where</span>
+<ol>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-1187">X</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1188">Y</script></span><span> are the set of strategies of the first and second player, respectively.</span></li>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-1191">X × Y</script></span><span>.</span><br>
+<span>The game is played as follows:</span></li>
+</ol>
+<ul>
+<li><span>Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1192">1</script></span><span> chooses </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1193">x \in X</script></span><span> and Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1194">2</script></span><span> chooses </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1195">y \in Y</script></span><span> simultaneously, each unaware of the choice of the other.</span></li>
+<li><span>Then their choices are made known and Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1196">1</script></span><span> wins </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1197">A(x, y)</script></span><span> and Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1198">2</script></span><span> wins </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1199">B(x, y)</script></span><span>. </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1200">A</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1201">B</script></span><span> are called utility function for Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1202">1</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1203">2</script></span><span> respectively.</span></li>
+<li><span class="mathjax"><script type="math/tex" id="MathJax-Element-1204">A</script></span><span> is the payoff matrix with Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1205">1</script></span><span> as the row player and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1206">B</script></span><span> is the payoff matrix with Player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1207">2</script></span><span> as the row player  where payoff matrix is as defined earlier.</span></li>
+<li><span>The goal of both players is to maximize their utility.</span></li>
+</ul>
+</li>
+<li><span>In a two-player zero-sum game, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1208">A = −B</script></span><span>.</span>
+<ul>
+<li><span>Hence, we describe a </span><strong><span>two-player zero-sum game</span></strong><span> by three sets </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1209">(X, Y, A)</script></span><span>.</span></li>
+</ul>
+</li>
+<li><span>We can write the expected payoff of the row player when payoffs are given by an </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1210">m × n</script></span><span> matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1211">A</script></span><span>, the row strategy is x (a distribution over rows), and the column strategy is y (a distribution over columns), as</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1212"> \sum_{i=1}^m \sum_{j=1}^n P[outcome(i,j)] a_{ij} \;\;\;(\text{definition of expectation})</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1213"> = \sum_{i=1}^m \sum_{j=1}^n P[\text{row i is chosen}].P[\text{column j is chosen}] a_{ij} </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1214"> \;\;\;(\text{since the row and column players randomize independently})</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1215"> = x^TAy</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1216"> (since\; P[\text{row i is chosen}]\; is\; x_i \;and\; P[\text{column j is chosen}]\; is\; y_j)</script></span></li>
+</ul><p><span>In a two-player zero-sum game, would one prefer to commit to a mixed strategy before or after the other player commits to his/hers? Intuitively, there is only a first-mover disadvantage, since the second player can adapt to the first player’s strategy. The minimax theorem however, implies that it doesn’t matter.</span><br>
+<span>For example, the matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1217">A</script></span><span> for rock-paper-scissors game is as follows:</span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1218"> \begin{bmatrix}  & \text{Rock} & \text{Paper} & \text{Scissors} \\ \text{Rock} & 0 & 1 & -1 \\ \text{Paper} & -1 & 0 & 1 \\ \text{Scissors} & 1 & -1 & 0 \end{bmatrix} </script></span></p><h3 id="The-Minimax-Theorem" data-id="The-Minimax-Theorem"><a class="anchor hidden-xs" href="#The-Minimax-Theorem" title="The-Minimax-Theorem"><span class="octicon octicon-link"></span></a><span>The Minimax Theorem</span></h3><p><span>Let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1219">A</script></span><span> be a </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1220">m × n</script></span><span> matrix representing the payoff matrix for a two-person zerosum game. Then the game has a value and there exists a pair of mixed strategies which are optimal for the two players.</span></p><p><span>In other words, for every two-person zero-sum game </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1221">(X, Y, A)</script></span><span> there is a mixed strategy </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1222">x^∗</script></span><span> for player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1223">1</script></span><span> and a mixed strategy </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1224">y^∗</script></span><span> for player </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1225">2</script></span><span> such that,</span></p><p><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1226"> max_x min_y x^T Ay = min_y max_x x^T Ay = x^{∗T} Ay^∗ </script></span></p><h3 id="LP-Duality-and-Minimax" data-id="LP-Duality-and-Minimax"><a class="anchor hidden-xs" href="#LP-Duality-and-Minimax" title="LP-Duality-and-Minimax"><span class="octicon octicon-link"></span></a><span>LP Duality and Minimax</span></h3><p><span>We give a </span><strong><span>proof of the minimax theorem</span></strong><span> as follows:</span><br>
+<span>We take the matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1227">A</script></span><span> the payoff matrix as described above. Let </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1228">r_1, r_2, ... r_m</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1229">c_1, c_2, ... c_n</script></span><span> be the rows and columns of the matrix </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1230">A</script></span><span> respectively.</span><br>
+<span>Firstly, we observe that for a vector </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1231">x</script></span><span>,</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1232"> min_y\; x^T Ay = min_j \;x^T A1_j = min_j <x, c_j> </script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1233">j \in \{1, 2, ... n\}</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1234">1_j</script></span><span> is where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1235">1_j</script></span><span> is the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1236">j^{th}</script></span><span> standard basis vector, corresponding to the column player choosing column </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1237">j</script></span><span>.</span><br>
+<span>because </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1238">Ay</script></span><span> is a distribution over </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1239">r_1, . . . , r_m</script></span><span>. Taking the maximum over all distributions </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1240">x</script></span><span>, we have</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1241"> max_x min_y x^T Ay = max_x min_j <x, c_j> </script></span><br>
+<span>where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1242">j \in \{1, 2, ... n\}</script></span><span>.</span><br>
+<span>Similarly,</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1243"> min_y max_x x^T Ay = min_y max_i <r_i, y> </script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1244">i \in \{1, 2, ... m\}</script></span><span>.</span></p><p><span>Now, we see that </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1245">max_x min_y \; x^T Ay</script></span><span> is equivalent to the following LP program taking </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1246">v=min_y x^T Ay=min_j <x, c_j></script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1247">j \in \{1, 2, ... n\}</script></span><span>:</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1248"> max \; v </script></span><br>
+<span>s.t.</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1249"> <x, c_j>\;\; \geq v \;\;\;\forall \;1 \leq j \leq n </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1250"> \sum_{i=1}^{m} x_i = 1</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1251">x_i \geq 0 \;\; \forall \;1 \leq i \leq m</script></span><br>
+<br>
+<span>Rewriting the above, we get</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1252"> v - <x, c_j> \;\;\leq 0\;\;\;\forall \;1 \leq j \leq n </script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1253"> \sum_{i=1}^{m} x_i = 1</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1254">x_i \geq 0 \;\;\; \forall \;1 \leq i \leq m</script></span><br>
+<br>
+<span>We see that the first constraint forces </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1255">v</script></span><span> to be at most </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1256">min \;<x, c_j></script></span><span>.</span><br>
+<span>We claim that if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1257">(v^*, x^*)</script></span><span> is an optimal solution, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1258">v^* = min \;<x^*, c_j></script></span><span>.</span></p><ul>
+<li><span>This an be seen from the fact that as noted earlier, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1259">v^*</script></span><span> can be at most </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1260">min \;<x, c_j></script></span><span>. And, if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1261">v^*</script></span><span> is less than </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1262">min \;<x, c_j></script></span><span>, by keeping </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1263">x_i</script></span><span>'s constant, it is possible to slightly increase </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1264">v^*</script></span><span> without contradicting feasibility which would hence contradict optimality.</span><br>
+<span>Therefore, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1265">v^* = min \;<x^*, c_j></script></span><span>.</span></li>
+</ul><p><span>Since </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1266">v^∗</script></span><span> maximizes </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1267">v</script></span><span> over all distributions </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1268">x</script></span><span>, </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1270">min \;w</script></span><br>
+<span>s.t.</span><br>
+<script type="math/tex; mode=display" id="MathJax-Element-1271">w-<r_i, y>\;\; \geq 0 \;\;\forall \;1 \leq i \leq m</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1272">\sum_{j=1}^{n}y_j = 1</script></span><span> </span><span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1273">y_j \geq 0 \;\; \forall \;1 \leq j \leq n</script></span><span> and the optimal</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1274"> w^* = min_y max_i <r_i, y> = min_y max_x \;x^T Ay </script></span><br>
+<span>Notice that these two linear programs are duals of each other which can be seen easily from the way we take dual of an LP. By strong duality, the optimal values </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1275">v^* = w^*</script></span><span> which proves the minimax theorem.</span></p><hr><h1 id="Linear-Programming-Algorithms" data-id="Linear-Programming-Algorithms"><a class="anchor hidden-xs" href="#Linear-Programming-Algorithms" title="Linear-Programming-Algorithms"><span class="octicon octicon-link"></span></a><span>Linear Programming Algorithms</span></h1><h2 id="Simplex-Method-Revisited" data-id="Simplex-Method-Revisited"><a class="anchor hidden-xs" href="#Simplex-Method-Revisited" title="Simplex-Method-Revisited"><span class="octicon octicon-link"></span></a><span>Simplex Method Revisited</span></h2><ul>
+<li>
+<p><strong><span>Worst-Case Running Time</span></strong><br>
+<span>The simplex method is </span><strong><span>very fast in practice</span></strong><span>, and routinely solves linear programs with hundreds of thousands of variables and constraints. However, the </span><strong><span>worst-case running time</span></strong><span> of the simplex method is </span><strong><span>exponential in the input size</span></strong><span>.</span></p>
+<p><span>We see that the number of vertices of a feasible region can be exponential in the dimension (e.g., </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1276">2^n</script></span><span> vertices of the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1277">n</script></span><span>-dimensional hypercube). However, it is very hard to construct a linear program where the simplex method actually visits all of the vertices of the feasible region.</span></p>
+</li>
+<li>
+<p><strong><span>Average-Case and Smoothed Running Time</span></strong><br>
+<span>It has been shown that the simplex method (with a suitable pivot rule) runs in polynomial time “on average” with respect to various distributions over linear programs.</span></p>
+<p><span>The simplex method has been proved to have polynomial “smoothed complexity”. Smoothed analysis is a hybrid of worst-case and average-case analyses. It measures the expected performance of algorithms under slight random perturbations of worst-case inputs.</span></p>
+<p><span>The main result is that, for every initial linear program, in expectation over the perturbed version of the linear program, the running time of simplex is polynomial in the input size.</span></p>
+<p><span>On the whole, bad examples for the simplex method are rare and hence simplex method remains the most commonly used linear programming algorithm in practice.</span></p>
+</li>
+</ul><hr><h2 id="Ellipsoid-Method" data-id="Ellipsoid-Method"><a class="anchor hidden-xs" href="#Ellipsoid-Method" title="Ellipsoid-Method"><span class="octicon octicon-link"></span></a><span>Ellipsoid Method</span></h2><ul>
+<li>
+<p><strong><span>Worst-Case Running Time</span></strong><br>
+<span>The ellipsoid method was originally proposed as an algorithm for non-linear programming. Later it was proved that for linear programs, the algorithm is actually guaranteed to run in polynomial time. This was the </span><strong><span>first polynomial-time algorithm for linear programming</span></strong><span>.</span></p>
+<p><span>The ellipsoid method is </span><strong><span>very slow in practice</span></strong><span> — usually multiple orders of magnitude slower than the fastest methods. But, how can a polynomial-time algorithm be so much worse than the exponential-time simplex method? There are two reasons behind that.</span></p>
+<ul>
+<li><span>The </span><strong><span>degree in the polynomial</span></strong><span> bounding the ellipsoid method’s running time is </span><strong><span>huge</span></strong><span> (like 4 or 5, depending on the implementation).</span></li>
+<li><span>The </span><strong><span>performance</span></strong><span> of the ellipsoid method </span><strong><span>on “typical cases”</span></strong><span> is generally </span><strong><span>close to its worst-case performance</span></strong><span>. This is in sharp contrast to the simplex method, which almost always solves linear programs in time far less than its worst-case (exponential) running time.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>Separation Oracles</span></strong></p>
+<p><span>The ellipsoid method is useful for proving theorems, especially for establishing that other problems are worst-case polynomial-time solvable, and thus are at least efficiently solvable in principle.</span></p>
+<p><strong><span>The ellipsoid method can solve some linear programs with n variables and an exponential (in n) number of constraints in time polynomial in n.</span></strong></p>
+<ul>
+<li><span>But, doesn’t it take exponential time just to read all of the constraints?</span><br>
+<span>For other linear programming algorithms, yes but not for the ellipsoid method as it doesn’t need an explicit description of the linear program. </span><strong><span>It just  needs is a helper subroutine</span></strong><span> known as a </span><strong><span>separation oracle</span></strong><span>.</span></li>
+</ul>
+<p><strong><span>The responsibility of a separation oracle is to take as input an allegedly feasible solution x to a linear program, and to either verify feasibility (if feasible) or produce a constraint violated by x (otherwise).</span></strong><span> Of course, the separation oracle should also run in polynomial time.</span></p>
+</li>
+<li>
+<p><strong><span>An Example:</span></strong><span> How could one possibly check an exponential number of constraints in polynomial time?</span><br>
+<span>We have actually already seen some examples of this.</span></p>
+<ul>
+<li><span>For example, we have seen </span><strong><span>the dual of the path-based linear programming formulation of the max-flow problem</span></strong><span>:</span></li>
+<li><span>Minimise </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1278">c^{T}l</script></span><span> subject to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1279">\sum_{e \in p} l_e \geq 1</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1280">\forall p \in P</script></span><span> and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1281">l_e \geq 0</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1282">\forall e \in E</script></span><br>
+<span>Here, </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1284">c_e</script></span><span>).</span></li>
+<li><span>Since a graph can have an exponential number of s-t paths, this linear program has a potentially exponential number of constraints. But, it has a polynomial-time separation oracle. The key observation is: at least one constraint is violated iff</span><br>
+<span class="mathjax"><script type="math/tex" id="MathJax-Element-1285">min_{p \in P}</script></span><span> </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1286">\sum_{e \in p} l_e < 1</script></span></li>
+<li><span>Thus, the separation oracle is just Dijkstra’s algorithm in this case. Notice that the above condition is equivalent to the following:</span></li>
+<li><span>Given an allegedly feasible solution </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1287">{l_e}</script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1288">e∈E</script></span><span> to the linear program,</span><br>
+<span>the separation oracle checks if each </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1289">l_e</script></span><span> is  non-negative (if </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1290">l_e < 0</script></span><span>, it returns the violated constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1291">l_e ≥ 0</script></span><span>).</span></li>
+<li><span>If the solution passes this test, then the separation oracle runs Dijkstra’s algorithm to compute a shortest s-t path, using the </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1292">l_e</script></span><span> s as (non-negative) edge lengths.</span></li>
+<li><span>If the shortest path has length at least 1, then all of the constraints are satisfied and the oracle reports “feasible”.</span><br>
+<span>If the shortest path </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1293">p^{∗}</script></span><span> has length less than 1, then it returns the violated constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1294">\sum_{e∈p^*}</script></span><span>  </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1295">l_e ≥ 1</script></span><span>.</span></li>
+<li><span>Thus, we can solve the above linear program in polynomial time using the ellipsoid method.</span></li>
+</ul>
+</li>
+<li>
+<p><strong><span>How the Ellipsoid Method Works</span></strong><br>
+<span>The first step in ellipsoid method is to reduce the optimization problem to a feasibility problem. Basically,if the objective is max </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1296">c^T x</script></span><span>, we replace the objective function by the constraint </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1297">c^T x ≥ k</script></span><span> for some target objective function value </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1298">k</script></span><span>.</span><br>
+<span>If we can solve this feasibility problem in polynomial time, then we solve the original optimization problem using binary search on the target objective function value </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1299">k</script></span><span>.</span></p>
+<p><em><span>The algorithm:</span></em><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><img src="https://i.imgur.com/i8FonKW.jpg" width="350" height="250"></p>
+<ul>
+<li><span>The ellipsoid method maintains at all times an ellipsoid which is guaranteed to contain the entire feasible region.</span></li>
+<li><span>It is initialised with a huge sphere to ensure the invariant at initialization.</span></li>
+<li><span>It then invokes the separation oracle on the center of the current ellipsoid.</span></li>
+<li><span>If the ellipsoid center is feasible, then the problem is solved.</span></li>
+<li><span>If not, the separation oracle produces a constraint satisfied by all feasible points that is violated by the ellipsoid center.</span></li>
+<li><span>Geometrically, the feasible region and the ellipsoid center fall on opposite sides of the corresponding halfspace boundary.</span></li>
+<li><span>Thus we know we can recurse on the appropriate half-ellipsoid.</span></li>
+<li><span>Before recursing, however, the ellipsoid method recreates a new ellipsoid that contains this half-ellipsoid which is now guaranteed to contain the entire feasible region.</span></li>
+<li><span>It can be shown that the volume of the current ellipsoid is guaranteed to reduce at a certain rate after each iteration, and this yields a polynomial bound on the number of iterations required.</span></li>
+<li><span>The algorithm stops when the current ellipsoid is so small that it cannot possibly contain a feasible point (given the precision of the input data).</span></li>
+</ul>
+</li>
+<li>
+<p><span>Thus we see how this method solves linear programs even with an exponential number of constraints. It never works with an explicit description of the constraints. It just generates constraints with every iteration. Since it terminates in a polynomial number of iterations, it generates only a polynomial number of constraints.</span></p>
+</li>
+</ul><hr><h2 id="Interior-Point-Methods" data-id="Interior-Point-Methods"><a class="anchor hidden-xs" href="#Interior-Point-Methods" title="Interior-Point-Methods"><span class="octicon octicon-link"></span></a><span>Interior Point Methods</span></h2><p><span>Till now we have seen the simplex and the ellipsoid methods. The simplex method works “along the boundary” of the feasible region, and the ellipsoid method works “outside in”. Interior point methods work “inside out”.</span><br>
+<span>There are many genres of interior-point methods, beginning with Karmarkar’s algorithm.</span></p><ul>
+<li><span>The main idea is, instead of maximizing the given objective </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1300">c^T x</script></span><span>, we maximize</span><br>
+<span class="mathjax"><script type="math/tex; mode=display" id="MathJax-Element-1301"> c^T x − λ · f (\text{distance between x and boundary}) </script></span><span> where </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1302">λ ≥ 0</script></span><span> is a parameter and </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1303">f</script></span><span> is a “barrier function”.</span></li>
+<li><span>In general, a barrier function is a continuous function whose value on a point increases to infinity as the point approaches the boundary of the feasible region.</span><br>
+<span>Here, the barrier function </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1304">f</script></span><span> goes to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1305">+∞</script></span><span> as distance between x and boundary goes to </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1306">0</script></span><span> (e.g., </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1307">log(\frac{1}{z})</script></span><span>).</span></li>
+<li><span>We initialise with a large value of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1308">λ</script></span><span> so as to simplify the problem. For example, when </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1309">f (z) = log(\frac{1}{z}</script></span><span>) , the solution is the center of the feasible region, and can be computed using methods like the Newton’s method.</span></li>
+<li><span>Then we gradually decrease the value of </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1310">λ</script></span><span> and track the corresponding optimal point along the way. When </span><span class="mathjax"><script type="math/tex" id="MathJax-Element-1311">λ = 0</script></span><span>, the optimal point is an optimal solution to the linear program, as required.</span></li>
+</ul><p><span>Interior-point methods consist of many algorithms that run in polynomial time in the worst case many interior-point methods also compete with the simplex method in practice. For example, one of Matlab’s LP solvers uses an interior-point algorithm.</span></p><hr></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#Linear-Programming-Notes" title="Linear Programming Notes">Linear Programming Notes</a><ul class="nav">
+<li class=""><a href="#Introduction" title="Introduction">Introduction</a><ul class="nav">
+<li class=""><a href="#Aim" title="Aim">Aim</a></li>
+<li class=""><a href="#Algorithms" title="Algorithms">Algorithms</a></li>
+</ul>
+</li>
+<li class=""><a href="#Modelling-the-problem" title="Modelling the problem">Modelling the problem</a><ul class="nav">
+<li class=""><a href="#The-general-problem" title="The general problem">The general problem</a></li>
+<li class=""><a href="#Basic-Terminology" title="Basic Terminology">Basic Terminology</a></li>
+<li class=""><a href="#Canonical-and-Standard-Forms" title="Canonical and Standard Forms">Canonical and Standard Forms</a></li>
+</ul>
+</li>
+<li class=""><a href="#Convexity" title="Convexity">Convexity</a><ul class="nav">
+<li class=""><a href="#Convex-Combinations" title="Convex Combinations">Convex Combinations</a></li>
+<li class=""><a href="#Convex-Set" title="Convex Set">Convex Set</a></li>
+<li class=""><a href="#Some-useful-points" title="Some useful points">Some useful points</a></li>
+</ul>
+</li>
+<li class=""><a href="#Geometric-view" title="Geometric view">Geometric view</a><ul class="nav">
+<li><a href="#Theorem" title="Theorem">Theorem</a></li>
+<li class=""><a href="#Proof" title="Proof">Proof</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Simplex-Method" title="Simplex Method">Simplex Method</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li class=""><a href="#Intuition" title="Intuition">Intuition</a></li>
+<li><a href="#Naive-algorithm" title="Naive algorithm">Naive algorithm</a></li>
+<li class=""><a href="#Algorithm" title="Algorithm">Algorithm</a></li>
+<li class=""><a href="#Matrix-representation" title="Matrix representation">Matrix representation</a></li>
+<li class=""><a href="#Simplex-algorithm-in-matrix-notation" title="Simplex algorithm in matrix notation">Simplex algorithm in matrix notation</a></li>
+<li class=""><a href="#Converting-to-tableau" title="Converting to tableau">Converting to tableau</a></li>
+<li class=""><a href="#Simplex-algorithm-using-tableau" title="Simplex algorithm using tableau">Simplex algorithm using tableau</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Duality" title="Duality">Duality</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li class=""><a href="#Primal-and-dual" title="Primal and dual">Primal and dual</a></li>
+<li class=""><a href="#Weak-Duality-Theorem" title="Weak Duality Theorem">Weak Duality Theorem</a></li>
+<li class=""><a href="#Strong-Duality-Theorem" title="Strong Duality Theorem">Strong Duality Theorem</a></li>
+<li class=""><a href="#Interpretation-and-use" title="Interpretation and use">Interpretation and use</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Some-Applications" title="Some Applications">Some Applications</a><ul class="nav">
+<li class=""><a href="#Max-flow--Min-cut-Problem" title="Max-flow / Min-cut Problem">Max-flow / Min-cut Problem</a><ul class="nav">
+<li class=""><a href="#What-is-the-max-flow-problem" title="What is the max-flow problem?">What is the max-flow problem?</a></li>
+<li class=""><a href="#Why-care-about-it" title="Why care about it?">Why care about it?</a></li>
+<li class=""><a href="#Algorithms1" title="Algorithms">Algorithms</a></li>
+<li class=""><a href="#Max-flow-as-a-Linear-Program" title="Max-flow as a Linear Program">Max-flow as a Linear Program</a></li>
+<li class=""><a href="#Max-flow-min-cut-theorem" title="Max-flow min-cut theorem">Max-flow min-cut theorem</a></li>
+<li class=""><a href="#Max-flowmin-cut-theorem-via-duality" title="Max-flow/min-cut theorem via duality">Max-flow/min-cut theorem via duality</a></li>
+</ul>
+</li>
+<li class=""><a href="#Minimum-Cost-flow" title="Minimum-Cost flow">Minimum-Cost flow</a><ul class="nav">
+<li class=""><a href="#What-is-the-mininum-cost-flow-problem" title="What is the mininum cost flow problem?">What is the mininum cost flow problem?</a></li>
+<li class=""><a href="#Minimum-Cost-Flow-as-Linear-Program" title="Minimum Cost Flow as Linear Program">Minimum Cost Flow as Linear Program</a></li>
+</ul>
+</li>
+<li class=""><a href="#Linear-Regression" title="Linear Regression">Linear Regression</a><ul class="nav">
+<li class=""><a href="#The-problem" title="The problem">The problem</a></li>
+<li class=""><a href="#Linear-Regression-as-LP" title="Linear Regression as LP">Linear Regression as LP</a></li>
+</ul>
+</li>
+<li class=""><a href="#Linear-Classifiers" title="Linear Classifiers">Linear Classifiers</a><ul class="nav">
+<li class=""><a href="#The-problem1" title="The problem">The problem</a></li>
+<li class=""><a href="#Linear-classifier-as-LP" title="Linear classifier as LP">Linear classifier as LP</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-Minimax-theorem-for-two-player-zero-sum-games" title="The Minimax theorem for two-player zero-sum games">The Minimax theorem for two-player zero-sum games</a><ul class="nav">
+<li class=""><a href="#Some-useful-definitions" title="Some useful definitions">Some useful definitions</a></li>
+<li class=""><a href="#Zero-Sum-Games" title="Zero-Sum Games">Zero-Sum Games</a></li>
+<li class=""><a href="#The-Minimax-Theorem" title="The Minimax Theorem">The Minimax Theorem</a></li>
+<li class=""><a href="#LP-Duality-and-Minimax" title="LP Duality and Minimax">LP Duality and Minimax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Linear-Programming-Algorithms" title="Linear Programming Algorithms">Linear Programming Algorithms</a><ul class="nav">
+<li><a href="#Simplex-Method-Revisited" title="Simplex Method Revisited">Simplex Method Revisited</a></li>
+<li><a href="#Ellipsoid-Method" title="Ellipsoid Method">Ellipsoid Method</a></li>
+<li class=""><a href="#Interior-Point-Methods" title="Interior Point Methods">Interior Point Methods</a></li>
+</ul>
+</li>
+<li class=""><a href="{{ url_for('main') }}" title="Home">Home</a></li>
+<li class=""><a href="{{ url_for('local') }}" title="Local Search">Local Search</a></li>
+<li class=""><a href="{{ url_for('cp') }}" title="Constraint Programming">Constraint Programming</a></li>
+<li class=""><a href="{{ url_for('tsp_note') }}" title="Local Search">Tsp Notes</a></li>
+<li class=""><a href="{{ url_for('branch') }}" title="Linear Programming">Branch and Bound</a></li>
+<li class=""><a href="{{ url_for('gavel') }}" title="Linear Programming">Gavel notes</a></li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#Linear-Programming-Notes" title="Linear Programming Notes">Linear Programming Notes</a><ul class="nav">
+<li class=""><a href="#Introduction" title="Introduction">Introduction</a><ul class="nav">
+<li class=""><a href="#Aim" title="Aim">Aim</a></li>
+<li class=""><a href="#Algorithms" title="Algorithms">Algorithms</a></li>
+</ul>
+</li>
+<li class=""><a href="#Modelling-the-problem" title="Modelling the problem">Modelling the problem</a><ul class="nav">
+<li class=""><a href="#The-general-problem" title="The general problem">The general problem</a></li>
+<li class=""><a href="#Basic-Terminology" title="Basic Terminology">Basic Terminology</a></li>
+<li class=""><a href="#Canonical-and-Standard-Forms" title="Canonical and Standard Forms">Canonical and Standard Forms</a></li>
+</ul>
+</li>
+<li class=""><a href="#Convexity" title="Convexity">Convexity</a><ul class="nav">
+<li class=""><a href="#Convex-Combinations" title="Convex Combinations">Convex Combinations</a></li>
+<li class=""><a href="#Convex-Set" title="Convex Set">Convex Set</a></li>
+<li class=""><a href="#Some-useful-points" title="Some useful points">Some useful points</a></li>
+</ul>
+</li>
+<li class=""><a href="#Geometric-view" title="Geometric view">Geometric view</a><ul class="nav">
+<li><a href="#Theorem" title="Theorem">Theorem</a></li>
+<li class=""><a href="#Proof" title="Proof">Proof</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Simplex-Method" title="Simplex Method">Simplex Method</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li class=""><a href="#Intuition" title="Intuition">Intuition</a></li>
+<li><a href="#Naive-algorithm" title="Naive algorithm">Naive algorithm</a></li>
+<li class=""><a href="#Algorithm" title="Algorithm">Algorithm</a></li>
+<li class=""><a href="#Matrix-representation" title="Matrix representation">Matrix representation</a></li>
+<li class=""><a href="#Simplex-algorithm-in-matrix-notation" title="Simplex algorithm in matrix notation">Simplex algorithm in matrix notation</a></li>
+<li class=""><a href="#Converting-to-tableau" title="Converting to tableau">Converting to tableau</a></li>
+<li class=""><a href="#Simplex-algorithm-using-tableau" title="Simplex algorithm using tableau">Simplex algorithm using tableau</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Duality" title="Duality">Duality</a><ul class="nav">
+<li class="invisable-node"><ul class="nav">
+<li class=""><a href="#Primal-and-dual" title="Primal and dual">Primal and dual</a></li>
+<li class=""><a href="#Weak-Duality-Theorem" title="Weak Duality Theorem">Weak Duality Theorem</a></li>
+<li class=""><a href="#Strong-Duality-Theorem" title="Strong Duality Theorem">Strong Duality Theorem</a></li>
+<li class=""><a href="#Interpretation-and-use" title="Interpretation and use">Interpretation and use</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Some-Applications" title="Some Applications">Some Applications</a><ul class="nav">
+<li class=""><a href="#Max-flow--Min-cut-Problem" title="Max-flow / Min-cut Problem">Max-flow / Min-cut Problem</a><ul class="nav">
+<li class=""><a href="#What-is-the-max-flow-problem" title="What is the max-flow problem?">What is the max-flow problem?</a></li>
+<li class=""><a href="#Why-care-about-it" title="Why care about it?">Why care about it?</a></li>
+<li class=""><a href="#Algorithms1" title="Algorithms">Algorithms</a></li>
+<li class=""><a href="#Max-flow-as-a-Linear-Program" title="Max-flow as a Linear Program">Max-flow as a Linear Program</a></li>
+<li class=""><a href="#Max-flow-min-cut-theorem" title="Max-flow min-cut theorem">Max-flow min-cut theorem</a></li>
+<li class=""><a href="#Max-flowmin-cut-theorem-via-duality" title="Max-flow/min-cut theorem via duality">Max-flow/min-cut theorem via duality</a></li>
+</ul>
+</li>
+<li class=""><a href="#Minimum-Cost-flow" title="Minimum-Cost flow">Minimum-Cost flow</a><ul class="nav">
+<li class=""><a href="#What-is-the-mininum-cost-flow-problem" title="What is the mininum cost flow problem?">What is the mininum cost flow problem?</a></li>
+<li class=""><a href="#Minimum-Cost-Flow-as-Linear-Program" title="Minimum Cost Flow as Linear Program">Minimum Cost Flow as Linear Program</a></li>
+</ul>
+</li>
+<li class=""><a href="#Linear-Regression" title="Linear Regression">Linear Regression</a><ul class="nav">
+<li class=""><a href="#The-problem" title="The problem">The problem</a></li>
+<li class=""><a href="#Linear-Regression-as-LP" title="Linear Regression as LP">Linear Regression as LP</a></li>
+</ul>
+</li>
+<li class=""><a href="#Linear-Classifiers" title="Linear Classifiers">Linear Classifiers</a><ul class="nav">
+<li class=""><a href="#The-problem1" title="The problem">The problem</a></li>
+<li class=""><a href="#Linear-classifier-as-LP" title="Linear classifier as LP">Linear classifier as LP</a></li>
+</ul>
+</li>
+<li class=""><a href="#The-Minimax-theorem-for-two-player-zero-sum-games" title="The Minimax theorem for two-player zero-sum games">The Minimax theorem for two-player zero-sum games</a><ul class="nav">
+<li class=""><a href="#Some-useful-definitions" title="Some useful definitions">Some useful definitions</a></li>
+<li class=""><a href="#Zero-Sum-Games" title="Zero-Sum Games">Zero-Sum Games</a></li>
+<li class=""><a href="#The-Minimax-Theorem" title="The Minimax Theorem">The Minimax Theorem</a></li>
+<li class=""><a href="#LP-Duality-and-Minimax" title="LP Duality and Minimax">LP Duality and Minimax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class=""><a href="#Linear-Programming-Algorithms" title="Linear Programming Algorithms">Linear Programming Algorithms</a><ul class="nav">
+<li><a href="#Simplex-Method-Revisited" title="Simplex Method Revisited">Simplex Method Revisited</a></li>
+<li><a href="#Ellipsoid-Method" title="Ellipsoid Method">Ellipsoid Method</a></li>
+<li class=""><a href="#Interior-Point-Methods" title="Interior Point Methods">Interior Point Methods</a></li>
+</ul>
+</li>
+<li class=""><a href="{{ url_for('main') }}" title="Home">Home</a></li>
+<li class=""><a href="{{ url_for('local') }}" title="Local Search">Local Search</a></li>
+<li class=""><a href="{{ url_for('cp') }}" title="Constraint Programming">Constraint Programming</a></li>
+<li class=""><a href="{{ url_for('tsp_note') }}" title="Local Search">Tsp Notes</a></li>
+<li class=""><a href="{{ url_for('branch') }}" title="Linear Programming">Branch and Bound</a></li>
+<li class=""><a href="{{ url_for('gavel') }}" title="Linear Programming">Gavel notes</a></li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>TSP: Traveling Salesperson Problem</title>
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <link rel="stylesheet" type="text/css" href="/static/styles/viz.css" media="screen" />
+    <link rel="stylesheet" href="static/css/main.css">
+  <link rel="stylesheet" href="static/css/syntax.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext" rel="stylesheet">
+
+    <script type="text/javascript" src="https://d3js.org/d3.v2.js"></script>
+    <script type="text/javascript" src="/static/js/constants.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+	<script type="text/javascript" src="/static/js/tsp.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script type="text/javascript">
+     </script>
+    
+</head>
+<body>
+    
+    <center>
+        Select Method of Solving TSP Problem
+	<select id = "typ">
+		<option value="a">Greedy</option>
+		<option value="b">Simulated annealing</option>
+        <option value="c">Local Guided Search</option>
+        <option value="d">E_approx_algo_2opt</option>
+        <option value="e">B approx_algo</option>
+	</select>
+    </center>
+	<div id="controls">
+		<div id="benchmark_zone" class="drop_zone" style="float:left; width:45%">Step 1 - Drop benchmark file here</div>
+		<div id="solution_zone" class="drop_zone" style="float:right; width:45%">Step 2 - Drop solution file here</div>
+		<div style="clear:both;"><p id="feedback"></p></div>
+	</div>
+	
+    <div id="data">
+        <table id="problemTable" class="metadataTable">
+            <tbody>
+            </tbody>
+        </table>	
+        <table id="solutionTable" class="metadataTable">
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+	
+    <div id="viz"></div>
+    <pre id="debug"></pre>
+
+    <script type="text/javascript" src="/static/js/viz.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,721 @@
+<html><head>
+	<!-- Import CSS files for navbar -->
+	<link rel="stylesheet" href="static/css/main.css">
+	<link rel="stylesheet" href="static/css/syntax.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700%7CSource+Sans+Pro:400,400i,700,700i&subset=greek,greek-ext,latin-ext" rel="stylesheet">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Branch and bound</title><style>
+  
+  /* CSS for website */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	/* white-space: pre-wrap; */
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body>
+	<!-- HTML For Navbar begins -->
+	<div class="sidebar">
+		<div class="container sidebar-sticky">
+		  <div class="sidebar-about">
+			<h1>Discrete Optimization</h1>
+		  </div>
+	  
+		  <input type="checkbox" id="menu-icon">
+		  <label class="menu-label" for="menu-icon"></label>
+		  <div class="trigger">
+			<ul class="sidebar-nav">
+				<li class="sidebar-nav-item">
+					<a href="{{ url_for('main') }}">Home</a>
+				  </li>
+		  
+		  
+					<li class="sidebar-nav-item">
+					  <a href="{{ url_for('local') }}">Local Search notes</a>
+					</li>
+		  
+					<li class="sidebar-nav-item">
+					  <a href="{{ url_for('lp') }}">Linear Programming notes</a>
+					</li>
+		  
+					<li class="sidebar-nav-item">
+					  <a href="{{ url_for('cp') }}">Constraint Programming notes</a>
+					</li>
+					<li class="sidebar-nav-item">
+					  <a href="#">Branch and Bound notes</a>
+					</li>
+					<li class="sidebar-nav-item">
+						<a href="{{ url_for('tsp_note') }}">TSP notes</a>
+					  </li>
+					  <li class="sidebar-nav-item">
+						<a href="{{ url_for('gavel') }}">Gavel notes</a>
+					  </li>
+					<li class="sidebar-nav-item">
+					  <a href="{{ url_for('tsp') }}">TSP Visualizer</a>
+					</li>
+		  
+					<li class="sidebar-nav-item">
+					  <a href="{{ url_for('sack') }}">Knapsack Solver</a>
+					</li>
+		  
+					<li class="sidebar-nav-item">
+					  <a href="{{ url_for('graph') }}">Gavel Graph Creator</a>
+					</li>
+				
+	  
+			  
+	  
+			</ul>
+		  </div>
+	  
+		  <p class="copyright">&copy; 2020. All rights reserved.</p>
+		</div>
+	  </div>
+	
+	<!-- HTML For Navbar begins -->
+	
+	
+	<!-- HTML For Main content begins -->
+	<article id="8dea3c5f-67f8-47eb-ade9-09d0b4cdedf2" class="page sans"><header><h1 class="page-title">Branch and bound</h1></header><div class="page-body"><nav id="59021e25-8321-49f0-98a2-5a0f3eeffcd9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#db87d770-7f8a-4a6f-84e6-a52078e61ebc">Notion of a state</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c969b9c3-af71-4791-aeb8-cbc6f409d70f">How can we represent a state?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7fcd4bbc-a536-4b82-8f8e-3e8d48548acd">Understanding the difference between modelling a problem and solving it.</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#14b5bb46-c5b6-47d5-8599-23e6ea9213e3">Search strategies judging criterias</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d496b2b4-864d-43a0-b550-96c185bc5548">Search strategies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#41bbe223-15ac-47f7-a64e-4846d614416d">UNINFORMED SEARCH STRATEGIES</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#376c88cf-261f-44ac-8dbd-8fd6b5e23057">Iterative deepening search</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2ec15182-5ff5-4217-8313-5b8c91cbc2ef">Bidirectional search</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1b8e32d9-7bf1-4eda-b3cf-c2f45bc57ee6">INFORMED SEARCH</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0201ac55-d7a2-4f2c-b0a1-4d85d07b020e"><strong>General tree search paradigm</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0527f66d-513a-40db-9333-1a482b9cbef6"><strong>General graph search paradigm</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e73d50d3-1e60-4283-9a4e-8ad71b60fe10">FOR THE TREE BASED IMPLEMENTATION</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#54644594-ea98-4158-b386-6af20e9e7b72">A * algorithm</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3b4cd2d6-15eb-45f4-b5f1-8b22bca15abb"><strong>Admissible heuristics</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9e15c100-8173-47f1-a98f-2b248d9cf071">Consistent heuristics</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e86d9e59-f06d-46f5-8672-115e0be05298">Proof of optimality of TREE version of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">A^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></a></div></nav><p id="71eae7d4-8a9c-4bf9-8af4-72a755de4074" class="">
+</p><p id="a2078060-f5a3-4d1a-9b9e-ffc9e6244ec8" class="">Chief <strong>References consulted : Prof Mausam&#x27;s,IIT DELHI lectures</strong></p><h2 id="db87d770-7f8a-4a6f-84e6-a52078e61ebc" class="">Notion of a state</h2><p id="d8d63881-dc05-48d2-adad-f862436f2aa8" class="">In simple words, all relevant information about the environment at a particular instant can be used to define a state.</p><h3 id="c969b9c3-af71-4791-aeb8-cbc6f409d70f" class="">How can we represent a state?</h3><p id="7c236803-fd57-4ad1-9ce1-ec2cb1802f9e" class="">Technically, an ID can be given to each distinct state. </p><p id="dafa7355-ffc8-4d24-a170-6f1c7d94b828" class="">Let us consider the scenario where we are interested in the seats occupied by two students: Joe and Donald.</p><p id="df497fa0-6b2f-4013-9798-554611a8587b" class=""><strong>Scenario A: </strong>Joe sits at seat 46 and Donald sits at seat 45.</p><p id="b19e371f-e19f-41ed-8941-a81b99ec840c" class=""><strong>Scenario B: </strong>Joe sits at seat 46 and Donald sits at seat 200.</p><p id="b1c4b1ee-a3cf-4a4d-9586-489f3042ab96" class="">Now, states A and B can be given respective ids of say, state A : id=10 and state B : id=11.</p><p id="f6d393de-84ef-48eb-969d-552934891aa3" class="">An alternate way to represent the states would be in the form of tuples of state variables, which the state is comprised of. So, scenario A can be represented as <strong>&lt;46,45&gt;, </strong>and scenario B can be represented as <strong>&lt;46,200&gt;</strong>. Representing the states in this way and thinking in terms of state variables is easier to visualize as local moves often involve going from one state S to another state S&#x27; where <strong>S and S&#x27; </strong>have the same value of some state variables and different values for the remaining state variables.</p><p id="87686579-5ad9-4f1b-88ed-bfa97481682b" class="">
+</p><figure id="8512ac25-0825-47dd-b933-40f241c96b60" class="image"><a href="/static/branch_Untitled.png"><img style="width:624px" src="/static/branch_Untitled.png"/></a></figure><h3 id="7fcd4bbc-a536-4b82-8f8e-3e8d48548acd" class="">Understanding the difference between modelling a problem and solving it.</h3><p id="9205cbbf-5fc2-4ae5-9a86-495befbaa280" class="">[credit: content covered in Prof Mausam&#x27;s lectures]</p><p id="644d9d61-bdda-4c8d-a0ca-07705a3c1a4e" class="">Imagine the <strong>states</strong> as the <strong>nodes of a graph</strong>.</p><p id="dbd1aada-896c-4a53-85d0-4a3853fdb8c5" class=""><strong>Defining a goal:</strong> Involves describing a situation we want to achieve, a set of properties that we want to hold, etc. This requires defining a &quot;goal test&quot; so that we know what it means to have achieved/satisfied our goal.</p><p id="127767db-a348-419f-8c21-9abec5980c83" class="">Imagine a <strong>black box A</strong> which takes a <strong>state S as input</strong> and gives a <strong>boolean output</strong> [Y/N] indicating whether the current state is a GOAL state(desired state) or not. Often there can be many goal states as many states may be acceptable. </p><p id="e31d1a45-7943-4148-8cc4-57c6cd2bf13e" class="">An edge A → B can be thought of as a move from state A to state B. Each edge also has additional properties as follows:</p><ul id="a434b30c-7ce6-4602-9306-ba179e188d8b" class="bulleted-list"><li>The <strong>type of move</strong> which was made (in the case that a state is being represented as a tuple of values of decision variables, a move type can be defined as per which particular variables undergo a change in value while moving from source node to destination node). This can be additionally thought of as the type of <strong>operator </strong>applied to a state A to move to state B.</li></ul><ul id="f353d5b7-1d02-4ba4-a669-84e9f18f9050" class="bulleted-list"><li>The <strong>cost associated</strong> with making the move.</li></ul><p id="45a2dd25-9d16-40f1-8890-fc0f10e360fd" class="">Modeling the problem would be to </p><ol id="be69ab05-f76d-4c28-babe-151cf2fdedf9" class="numbered-list" start="1"><li>Find a way to represent the states in the problem.</li></ol><ol id="a4107226-3130-4f77-b47e-510753c44eb0" class="numbered-list" start="2"><li>Deciding which nodes (states) are reachable from other states.</li></ol><ol id="4fddf9c4-9f61-4cd5-b2f8-76a9b326d319" class="numbered-list" start="3"><li>The cost associated with such a move. </li></ol><p id="61212a45-cc80-4a1b-9e5d-468285ed7eb8" class="">Solving the problem would involve the algorithm used to <strong>make the decision of which state S&#x27; to select as the next state from a list of possible neighbours of current state S</strong>.</p><h3 id="14b5bb46-c5b6-47d5-8599-23e6ea9213e3" class="">Search strategies judging criterias</h3><p id="06dfdb43-6329-48c2-a0dc-c322b18d73aa" class="">A search strategy is defined by picking the order of node expansion. Strategies can be evaluated along the following dimensions:</p><ul id="10d87b74-8387-470f-89d1-9e7e0ef9b0f2" class="bulleted-list"><li><strong>Completeness: </strong>Does it always find a solution if at least one exists?</li></ul><ul id="91c7c4a3-7fac-4458-9232-258750875b5d" class="bulleted-list"><li><strong>Time complexity:</strong> number of nodes generated (worst case)</li></ul><ul id="f5a19f15-2130-4fc1-8542-a740f8356c95" class="bulleted-list"><li><strong>Space complexity: </strong>maximum number of nodes in memory (worst case)</li></ul><ul id="e8b5ead8-3426-4aeb-9aec-60e013c33a37" class="bulleted-list"><li><strong>Optimality:</strong> Does it always find a least-cost solution (solution achieved by traversing the minimum possible sum of edge weights)?</li></ul><ul id="843dc72a-1799-409b-9caa-0742595ba1a2" class="bulleted-list"><li><strong>Systematicity: </strong>Does it visit every node at most once?</li></ul><p id="556403bf-1511-41f2-87d8-c83988c21ab2" class="">
+</p><p id="dbc7275b-a496-4423-86db-c906f359c21e" class=""><strong>Time and space complexity are measured in terms of:</strong></p><ul id="4ca0c822-a267-49c5-84fc-8bfe3eeb4e0d" class="bulleted-list"><li><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span></span><span>﻿</span></span></strong><strong> : </strong>maximum branching factor of the search tree (approx. how many actions can one take at a given node to move to the next node)</li></ul><ul id="b0559b09-5627-4966-a499-4476ba4fde9e" class="bulleted-list"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi></mrow><annotation encoding="application/x-tex">d</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">d</span></span></span></span></span><span>﻿</span></span> : depth of the shallowest goal node</li></ul><ul id="ee49778f-dd2c-4151-b39c-4876f0b90721" class="bulleted-list"><li><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span></span><span>﻿</span></span> : maximum depth of any path in the state space (may potentially be ∞)</li></ul><h1 id="d496b2b4-864d-43a0-b550-96c185bc5548" class="">Search strategies</h1><ul id="e029bf74-8266-4705-bfe9-409975999bee" class="bulleted-list"><li><strong>Uninformed search</strong>: All non-goal nodes in frontier look equally good.</li></ul><ul id="f58775d1-ccd7-465f-886d-57e0c5bc50c6" class="bulleted-list"><li><strong>Informed search:</strong> Some non-goal nodes can be ranked above others.</li></ul><h2 id="41bbe223-15ac-47f7-a64e-4846d614416d" class="">UNINFORMED SEARCH STRATEGIES</h2><p id="2271b087-4fff-4d46-9767-f0d8cf18379b" class="">An uninformed (a.k.a. blind, brute-force) search algorithm <strong>generates the search tree without using any domain-specific knowledge</strong>. These search strategies use only the information available in the problem definition. Such strategies <strong>do not take into account the location of the goal</strong>. They ignore where they are going until they find a goal and report success.</p><ul id="f3964e69-de6a-4785-91ff-fbf02a2f4e52" class="bulleted-list"><li><strong>Depth First Search</strong> (expand deepest node yet first) <strong>:</strong> <ol id="e50fd2d7-e2c1-4e3c-817d-cc60b0ecab26" class="numbered-list" start="1"><li>This strategy maintains a <strong>stack</strong> of nodes it is currently exploring.</li></ol><ol id="5cde2fbb-fff2-4cda-8181-59c3e1dd9f22" class="numbered-list" start="2"><li><strong>Completeness:</strong> No, as m may be infinite.</li></ol><ol id="813ad933-547c-470d-93ba-11a0304ad55b" class="numbered-list" start="3"><li><strong>Time Complexity</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>m</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></li></ol><ol id="2a75c09e-d8fe-4c6d-8e09-06346a0dfabf" class="numbered-list" start="4"><li><strong>Space Complexity:</strong> <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>b</mi><mi>m</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(bm)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></li></ol><figure id="8656bc5f-8cd9-41de-9069-23934f9e1a41"><div class="source"><a href="https://www.youtube.com/watch?v=dtoFAvtVE4U">https://www.youtube.com/watch?v=dtoFAvtVE4U</a></div></figure></li></ul><hr id="e17306fd-4220-4962-a127-495934a6e7f4"/><p id="011c9443-cf6a-4274-97aa-d575fd7e9ee9" class=""><strong>Breadth First Search </strong>(expand shortest node first):</p><ol id="9575624a-4837-4937-9d2d-525971a12993" class="numbered-list" start="1"><li>This strategy maintains a queue of nodes it is currently exploring.<strong> </strong></li></ol><ol id="dc592b48-6902-41b8-928b-b3e974ac7438" class="numbered-list" start="2"><li>Least cost and shortest may not be the same.</li></ol><ol id="1e5c54dc-3e9c-40eb-871c-ad499900159b" class="numbered-list" start="3"><li><strong>Completeness:</strong> Yes (b is finite).</li></ol><ol id="68afc77c-5663-41be-a878-7abfbae32ffc" class="numbered-list" start="4"><li><strong>Time Complexity</strong>: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>d</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">d</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></li></ol><ol id="2c319118-e8a4-4ed0-a8c6-df269f4a536c" class="numbered-list" start="5"><li><strong>Space Complexity</strong>:<style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mi>d</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex"> O(b^d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">d</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></li></ol><ol id="b235dd39-502a-4b52-b860-257fe85dab16" class="numbered-list" start="6"><li><strong>Optimal</strong> when <strong>step cost is 1</strong>.</li></ol><p id="601173a9-5a24-49f8-ae61-1c5626e1ed6c" class="">
+</p><hr id="f7210661-b6f3-4f9e-a494-1dda2f718a3a"/><ul id="02fb242f-7b07-45e7-befc-913da34b6c8b" class="bulleted-list"><li><strong>Uniform Cost Search </strong>(expand cheapest node first)<strong>: </strong><ol id="d2a55cc4-242b-4060-ad7b-506e94ad6219" class="numbered-list" start="1"><li>This strategy maintains a <strong>queue</strong> of nodes it is currently exploring.<strong> </strong></li></ol><ol id="a56ccf6e-aa18-40a4-b970-ed8ee976cc1e" class="numbered-list" start="2"><li><strong>Completeness:</strong> Yes (b is finite).</li></ol><ol id="8d149093-4bef-48fc-b618-5bffe185dd5c" class="numbered-list" start="3"><li><strong>Time Complexity: </strong>Let <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>C</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">C^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> be the cost of the optimal solution, and <strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ε</mi></mrow><annotation encoding="application/x-tex">ε</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">ε</span></span></span></span></span><span>﻿</span></span></strong> be at least each step to get closer to the goal node. Then the number of steps is = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>C</mi><mo>∗</mo></msup><mi mathvariant="normal">/</mi><mi>ε</mi></mrow><annotation encoding="application/x-tex">C^*/ε</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mord">/</span><span class="mord mathdefault">ε</span></span></span></span></span><span>﻿</span></span>. Hence, the worst-case time complexity of Uniform-cost search is <strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><msup><mi>C</mi><mo>∗</mo></msup><mi mathvariant="normal">/</mi><mi>ε</mi></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^{C^*/ε})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1473399999999998em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8973399999999998em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7633428571428571em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mord mtight">/</span><span class="mord mathdefault mtight">ε</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong>.</li></ol><ol id="e079c6aa-7cba-4405-860b-be56c2061c8c" class="numbered-list" start="4"><li><strong>Space Complexity: </strong>The same logic is for space complexity so, the worst-case space complexity of Uniform-cost search is <strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><msup><mi>C</mi><mo>∗</mo></msup><mi mathvariant="normal">/</mi><mi>ε</mi></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^{C^*/ε})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.1473399999999998em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8973399999999998em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7633428571428571em;"><span style="top:-2.931em;margin-right:0.07142857142857144em;"><span class="pstrut" style="height:2.5em;"></span><span class="sizing reset-size3 size1 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mord mtight">/</span><span class="mord mathdefault mtight">ε</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong>.</li></ol><ol id="f6182c2e-db3e-4b4f-905a-325452fd88b7" class="numbered-list" start="5"><li><strong>Optimal</strong></li></ol></li></ul><ul id="c4695d80-59c0-4e35-aab4-c5e6d5c7bd47" class="bulleted-list"><li>Space → DFS wins</li></ul><ul id="a134ec22-7b5e-47e5-ab0a-d967ed05ca60" class="bulleted-list"><li>Time → BFS wins as &#x27;d&#x27; may be less than &#x27;m&#x27;</li></ul><figure id="b3e00ebb-0b4b-4e2e-98bf-5b7bac8350f3"><div class="source"><a href="https://www.youtube.com/watch?v=z6lUnb9ktkE">https://www.youtube.com/watch?v=z6lUnb9ktkE</a></div></figure><p id="d37a8e7f-0a94-479d-9d47-e1dc8544ddaf" class="">
+</p><figure id="29cf0203-dba9-4034-97d1-56a43e13a28e" class="image"><a href="/static/branch_Untitled%201.png"><img style="width:480px" src="/static/branch_Untitled%201.png"/></a></figure><ul id="0ff50ce9-f794-45ec-90a0-137984b14bc0" class="bulleted-list"><li>It is possible that whatever node was taking us to the goal got pruned, hence beam=not optimal</li></ul><ul id="75d403f3-fdb0-424e-aee6-15d304ac892a" class="bulleted-list"><li>Optimal=NO</li></ul><ul id="314fef1a-fd59-4435-9b1e-cd13f161bc8f" class="bulleted-list"><li>Complete=NO</li></ul><h2 id="376c88cf-261f-44ac-8dbd-8fd6b5e23057" class="">Iterative deepening search</h2><ul id="88542616-66c6-41a1-b683-164cca39a74e" class="bulleted-list"><li>Do a DFS, stop in the middle and repeat.</li></ul><ul id="c94d80a6-8e4b-46ff-aefd-33cd2c715f10" class="bulleted-list"><li>Is it complete? YES, I don&#x27;t need to expand after reaching depth &#x27;d&#x27; (which we assume is finite)</li></ul><ul id="462f2e6b-4811-4374-87c6-265645b7e718" class="bulleted-list"><li>Time here is pretty terrible as if we suppose that the target is at depth d&#x27;, then a node at level 0 will be reached (n+1) times, a node at node &#x27;1&#x27; will be checked &#x27;n&#x27; times, and so on. </li></ul><p id="3516dc56-6e1c-4190-a231-bc9df1dba5bd" class="">Notice the  <strong>ARITHMETIC-GEOMETRIC PROGRESSION</strong></p><p id="71358f8b-3a13-4185-91ea-f6e47ac1723d" class="">
+</p><figure id="47ee5cd8-07f7-4ac6-abb8-a02438ad4d0d" class="image"><a href="/static/branch_Untitled%202.png"><img style="width:384px" src="/static/branch_Untitled%202.png"/></a></figure><p id="feb29ab7-4bbe-4d5b-9b01-78095b55ac81" class=""><strong>Space : </strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>b</mi><mi>d</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(bd)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mord mathdefault">d</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="a29c6a97-f352-4762-b4dc-7d06f52ed1d3" class=""><strong>Optimality :</strong> Not optimal (optimal only in the special case when all costs are equal)</p><p id="ecc3e4f8-be04-4ed9-8952-e2df2cf8cbbb" class=""><strong>Systematic : </strong>It does not require to touch all nodes atleast once.</p><h2 id="2ec15182-5ff5-4217-8313-5b8c91cbc2ef" class="">Bidirectional search</h2><ul id="2209d49c-d746-4cab-bc57-1621fc8fd0df" class="bulleted-list"><li>When is bidirectional search applicable ?? </li></ul><ul id="3a255861-c23a-4b11-bd27-784a7d2be7bb" class="bulleted-list"><li><strong>Initial inputs: </strong>Starting state + edges in forward direction</li></ul><ul id="a8a9dcd0-4196-4b51-98f7-33b46ba5208c" class="bulleted-list"><li>For such a search, we also need an expansion function for backward direction ( a way to traverse edges in a reverse manner )</li></ul><ul id="3314ec35-5fc9-476a-af7f-0550f7b3da44" class="bulleted-list"><li><strong>When should we use it ?</strong></li></ul><p id="c5a9e2f8-39b9-411e-9698-9229c9994c2d" class=""> </p><div id="0757bcca-93d6-423b-86bd-20b7c97497fb" class="column-list"><div id="7f9f74fc-5879-47ec-8a55-108d801dc15e" style="width:50%" class="column"><figure id="c0bbdb5f-642b-44bf-81ea-38f152b56475" class="image"><a href="/static/branch_Untitled%203.png"><img style="width:240px" src="/static/branch_Untitled%203.png"/></a></figure></div><div id="b3b149b9-8012-4667-91de-b15afbeea9b7" style="width:50%" class="column"><figure id="13cefa32-a839-4b23-8e38-a95ba11f8ef0" class="image"><a href="/static/branch_Untitled%204.png"><img style="width:288px" src="/static/branch_Untitled%204.png"/></a></figure></div></div><p id="6d71007b-bd0d-479d-8907-cfc1e0b4218d" class="">
+</p><ul id="31a9c123-489b-4460-ad52-822121e0b28f" class="bulleted-list"><li><strong>Complete? </strong>Yes as an expansion from both ends, the forward and backward pointers must meet somewhere. If done alternatively, they will meet at a distance of d/2.</li></ul><ul id="7f9d7fd5-c0fd-4ba2-a9c5-298ce21d9890" class="bulleted-list"><li><strong>Time</strong> → instead of one search of depth &#x27;d&#x27;, we are doing 2 searches of depth d/2 and so time = <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><mo stretchy="false">[</mo><mi>d</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">]</mo></mrow></msup><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><mo stretchy="false">[</mo><mi>d</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">]</mo></mrow></msup><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>b</mi><mrow><mo stretchy="false">[</mo><mi>d</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">]</mo></mrow></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(b^{[d/2]})+O(b^{[d/2]})=O(b^{[d/2]})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.138em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">[</span><span class="mord mathdefault mtight">d</span><span class="mord mtight">/</span><span class="mord mtight">2</span><span class="mclose mtight">]</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.138em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">[</span><span class="mord mathdefault mtight">d</span><span class="mord mtight">/</span><span class="mord mtight">2</span><span class="mclose mtight">]</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.138em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8879999999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">[</span><span class="mord mathdefault mtight">d</span><span class="mord mtight">/</span><span class="mord mtight">2</span><span class="mclose mtight">]</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></li></ul><ul id="386320da-d7c0-47f9-888a-23d48bdd59a2" class="bulleted-list"><li><strong>Optimal</strong> : No in general. Yes if instead of BFS, Uniform cost search is done in both directions.</li></ul><p id="780e670d-6e8a-47aa-9986-39b50f7071c8" class=""><strong>My concerns</strong></p><p id="ee5070c1-b9fb-400d-b589-c7ffd5a62fe4" class="">If goal state is known, why is there even a need to search stuff.</p><p id="89194103-f49d-47a6-a3ba-e778b000f417" class=""><strong>My view</strong></p><p id="51152877-8285-4e32-90f5-3b020c14547a" class="">Apparently, a huge role in whether to choose forward search or backward search is of the degree of in-edges and out-edges.</p><p id="f59b9f80-9690-4d5c-9303-d45acff38f3f" class="">
+</p><figure id="c5f73365-be30-4166-95d4-82dda4736ea4" class="image"><a href="/static/branch_Untitled%205.png"><img style="width:478px" src="/static/branch_Untitled%205.png"/></a></figure><p id="07652203-5b7d-424c-b1b5-3ee60b682b02" class="">As can be seen in this diagram, the out-factor (forward)~6 but in-factor(backward)=1 as each node seems to have only one parent. In such a case, it seems better to move backward as we would only explore four nodes in the process rather than exploring ~ approx <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>6</mn><mn>4</mn></msup></mrow><annotation encoding="application/x-tex">6^4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">6</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> nodes.</p><p id="5604b160-3c8e-4406-ab78-2567e043045a" class="">
+</p><figure id="feb869ab-5438-4cdc-a186-48af72f4ceab" class="image"><a href="/static/branch_Untitled%206.png"><img style="width:384px" src="/static/branch_Untitled%206.png"/></a></figure><p id="44b9e7d9-d6c8-4e68-8931-fa3bfc8424f4" class="">
+</p><p id="e3c54896-05d6-4f2a-b6c8-9964a96e56d8" class="">Repetition of nodes in case of bidirectional edges is a huge problem</p><p id="bd32b121-34d9-4f39-a231-2f4f33972817" class="">
+</p><p id="f5c231d4-4f10-43d1-bc68-50e33642d000" class="">
+</p><h2 id="1b8e32d9-7bf1-4eda-b3cf-c2f45bc57ee6" class="">INFORMED SEARCH</h2><p id="c6fa493d-8a3a-43f8-85bb-158f3e4b9011" class="">Uninformed search algorithms have the con of searching in all directions. They are not guided towards the goal in any specific way. Hence, it is desirable to add this guidance factor to the searches we perform. </p><p id="0c756138-b5be-4cd9-a030-f87538476f19" class="">
+</p><div id="0d3282e5-f886-4d06-a41e-7607e9fad428" class="column-list"><div id="95cdb5e2-8f2a-414f-af7e-34b96e042ef7" style="width:50%" class="column"><figure id="c8b9cfde-6f37-4737-89bc-eebdba47b6c3" class="image"><a href="/static/branch_Untitled%207.png"><img style="width:336px" src="/static/branch_Untitled%207.png"/></a></figure></div><div id="2db46670-70f8-4cfc-a9e4-2c9743f07f8f" style="width:50%" class="column"><figure id="12f1015e-5261-4bb3-ac16-265f9283354f" class="image"><a href="/static/branch_Untitled%208.png"><img style="width:192px" src="/static/branch_Untitled%208.png"/></a></figure><p id="c1eb9343-aa2b-464a-a128-3e1e3d154bb2" class="">
+</p></div></div><p id="269a45d6-6e28-4d0c-8019-33774fcaa3e0" class="">
+</p><p id="c32c5b07-b24a-4105-a33b-a97d3b218331" class="">The objective is to be smart about what paths we must try.</p><p id="ed3bcde9-ecd8-4053-aa64-cf9236f5efa0" class="">
+</p><figure id="bb6ee02a-4543-4d9c-939a-5af6ee62e1a3" class="image"><a href="/static/branch_Untitled%209.png"><img style="width:384px" src="/static/branch_Untitled%209.png"/></a></figure><p id="ba7b1214-672b-4a22-a1e9-382ab0f14eb3" class="">The motive is to capture our intuition in terms of a particular neighbour A seems to be better (intuitively speaking) and is more likely to reach an acceptable solution than another neighbour B.</p><p id="b24fd396-348b-4cdd-954d-14a72512ad4f" class="">In such a case, a node N is selected as a successor to the current node <strong>based on an evaluation function that estimates cost to goal.</strong></p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="b07279dc-93bb-40c4-ae7d-32e5d7f14fc5"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">fringe=open list=frontier</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6a80f8a1-447d-4817-b396-c7b717070317"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">closed-list=explored-list</div></figure><h3 id="0201ac55-d7a2-4f2c-b0a1-4d85d07b020e" class=""><strong>General tree search paradigm</strong></h3><figure id="8c97b675-3d25-4768-96b6-8e95a9481b58" class="image"><a href="/static/branch_Untitled%2010.png"><img style="width:480px" src="/static/branch_Untitled%2010.png"/></a></figure><h3 id="0527f66d-513a-40db-9333-1a482b9cbef6" class=""><strong>General graph search paradigm</strong></h3><p id="7b0e9703-4294-46cb-bf9a-32420aa2b35d" class="">Differs from tree search paradigm in the notion that in a tree, we are sure that there are no repeated vertices. But in a graph search algo, there can be repeated vertices and we must make sure that we do not check already explored vertices by keeping a EXPLORED_LIST.</p><p id="64359d35-55aa-494e-bedd-2622eebb7684" class=""><strong>BEST FIRST SEARCH</strong></p><figure id="9ab7aff0-8dd1-49e1-9984-f0924ed020bb" class="image"><a href="/static/branch_Untitled%2011.png"><img style="width:480px" src="/static/branch_Untitled%2011.png"/></a></figure><p id="f011fc9f-7a60-4dae-8f6f-17bb1a7c90b9" class="">Any search strategy can be identified by observing the order in which it expands its nodes. DFS→ depth, BFS→ all nodes at a given distance in ascending order etc</p><p id="9296bfec-b74b-4936-af09-f441cb386e86" class=""><strong>Likewise, Best First search → expands in order of lowest </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span></strong><strong> value where </strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span> is the evaluation <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> for node <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span>. 
+<strong>Always choose the node from fringe(open list) that has the lowest f value.</strong></p><p id="94e56adf-6cd7-4189-b86f-0795c951fd8d" class="">Intuitively, expand the most desirable unexpanded note.</p><blockquote id="29f7193a-4eee-4c4e-a93a-9a2abbe99b78" class="">Summarizing, DFS→ stack, BFS→ queue, Best first search → priority queue</blockquote><figure id="96a51c1c-131c-4faf-9408-84287a2a4562" class="image"><a href="/static/branch_Untitled%2012.png"><img style="width:480px" src="/static/branch_Untitled%2012.png"/></a></figure><ol id="3eb49cce-8b5f-400d-9a21-923125ace76e" class="numbered-list" start="1"><li>Let us say our initial state = City Aradh</li></ol><ol id="4e7e081c-c6e7-4888-8081-d247ce852752" class="numbered-list" start="2"><li>Goal  state = Reaching City Bucharest </li></ol><ol id="c8d6a266-1a4f-4611-a82e-312b16adc6cf" class="numbered-list" start="3"><li>Before any further matter on best-first search, one can notice that we can express  the uninformed search strategies as special cases of Best First Search :<ol id="cfc3b2a3-59aa-445a-9c1d-86041c7a8041" class="numbered-list" start="1"><li><strong> BFS→ f = depth</strong></li></ol><ol id="625b6dad-ece5-4aa7-a2a7-cf1473343106" class="numbered-list" start="2"><li><strong>Uniform cost search → </strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span></span><span>﻿</span></span><strong> = length of path to go from origin to node</strong></li></ol></li></ol><p id="c86775e5-ecc8-4431-bfda-b0a783c79459" class="">
+</p><p id="dd92b10e-931f-424d-9c0f-dac93edbf0b0" class=""><strong>Let us define 3 functions: </strong></p><ol id="1ac4fefd-8881-4b13-a77d-5bd83317a254" class="numbered-list" start="1"><li><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong><strong> = evaluation function to choose which neighbour (chosen from the fringe) must be expanded next</strong></li></ol><ol id="7c952755-a73a-41fe-8758-93883fee5346" class="numbered-list" start="2"><li><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong><strong> = sum of edge costs traversed to reach a node </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span></strong><strong> from origin (starting state)</strong></li></ol><ol id="48410220-3164-4815-a5a8-2e7209a6d67d" class="numbered-list" start="3"><li><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong><strong>= guess (estimate) of the sum of edge costs which we would need to traverse from current node </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span></strong><strong> to the closest goal</strong></li></ol><p id="3f68f636-b606-4af7-94ec-520408366afa" class="">
+</p><p id="56958ded-1a85-4bc8-8952-a9edddad3c55" class="">Now, in the map of Romania, we can choose the straight-line Euclidean distance to the target city as our <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> where &#x27;n&#x27; is the node being judged. So, if we want to minimize this, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f(n) = h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="595e5459-4e12-47bb-8987-729e5bb09ac5" class="">But let&#x27;s say we want to go from ORANGE TO YELLOW and the implementation is based on the tree search version (we are not keeping a note of the already explored nodes) , then such a defined heuristic will get stuck in a cycle, as :</p><p id="23fb928f-995b-4350-b16f-6fa7a7c22af3" class="">When current state = ORANGE, our algorithm will choose GREEN</p><p id="d74adede-b4d7-494b-aa18-8ff0bdc5d72a" class="">When current state = GREEN, our algorithm will choose ORANGE</p><p id="83c67784-a6b0-4ee3-8b00-ac0318b3d099" class="">And hence, the algorithm will keep moving in a cycle. Hence, choosing minimization of Euclidean distance as <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> is not a COMPLETE strategy.</p><p id="31963e00-48d3-4e8b-b2a7-7439d770d23d" class="">Intuitively, we can see why this is happening. </p><p id="7a5f2dd6-d735-4a7e-89bc-1219a55a3150" class="">The overall cost of reaching would be g(n)+h(n). But our evaluation function f(n) = h(n) is only judging based on the second half of the journey ie h(n). So, while moving between the 2 nodes in a cyclic manner, g(GREEN) keeps on increasing as 1*87, 3*87, 5*87, and so on. But, our chosen heuristic, in this case, seems to ignore this fact and hence, the inefficiency.</p><h3 id="e73d50d3-1e60-4283-9a4e-8ad71b60fe10" class="">FOR THE TREE BASED IMPLEMENTATION</h3><figure id="dcce32a5-29c8-481b-9f79-d82e897f6b05" class="image"><a href="/static/branch_Untitled%2013.png"><img style="width:432px" src="/static/branch_Untitled%2013.png"/></a></figure><p id="b724112a-016d-4dfd-b974-b67c7010fefb" class="">As a result, we consider the A* algorithm which seems to keep track of both the parts of the journey.</p><hr id="b8720358-ff59-4011-b015-c38928bda3e4"/><p id="528a9bbe-d610-4f9e-84b3-c8574ee60205" class="">
+</p><figure id="9b6774c3-2cd7-4a35-b9a1-634a889e0519" class="image"><a href="/static/branch_Untitled%2014.png"><img style="width:624px" src="/static/branch_Untitled%2014.png"/></a></figure><h2 id="54644594-ea98-4158-b386-6af20e9e7b72" class="">A * algorithm</h2><p id="e8e24b46-f698-4805-8081-38b0c1b71e2c" class="">A* is basically an extended BFS that prioritizes the shortest routes that can be reached first and then the other routes. It is optimal and complete. So, for the above map, it easy to calculate g(n) since we are traversing along the edges to reach node n from the origin. h(n) is estimated as the euclidean distance from node &#x27;n&#x27; to the target goal node. In such a case, f(n) can be written as </p><figure id="52904f96-5823-4633-8b90-83e0eb0f80ac" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>α</mi><mtext> </mtext><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>+</mo><mi>β</mi><mtext> </mtext><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mtext> </mtext><mi>w</mi><mi>h</mi><mi>e</mi><mi>r</mi><mi>e</mi><mtext> </mtext><mtext> </mtext><mi>α</mi><mo separator="true">,</mo><mi>β</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">f(n)=\alpha\: g(n) + \beta \: h(n) \:\:\: \:\:\: where\:\: \alpha , \beta &gt;0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">e</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span></span></div></figure><p id="d9842417-bbc8-4806-83c6-de657249bb1e" class="">For simplicity, let&#x27;s assume that <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mtext> </mtext><mo>=</mo><mtext> </mtext><mi>β</mi><mtext> </mtext><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\alpha \: = \: \beta \: =1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></span><span>﻿</span></span>.</p><p id="b0b81289-b550-4414-a974-bab12c469925" class="">Now attempting to go from Arad to Bucharest, </p><p id="9f88a07d-845d-438e-a804-168161e4e7a7" class="">
+</p><figure id="c9ca2732-9fb3-42b7-b388-41b81f3d113a" class="image"><a href="/static/branch_Untitled%2015.png"><img style="width:624px" src="/static/branch_Untitled%2015.png"/></a></figure><p id="405de7ca-be32-4360-a2a9-15925992db98" class="">A thing to observe is that we reach Bucharest from Fagaras by incurring a cost of 450 but at that point of time, we would still have Pitesti as unexpanded but with <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>P</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(Pitesti)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> lesser than 450. So, that still makes it possible for a <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>P</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(Pitesti)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> + <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>P</mi><mi>i</mi><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mi>i</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(Pitesti)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> to have a lesser cost than 450 and so, it would be imperative to check for all such cities unless we are able to conclude that for a city C, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo stretchy="false">)</mo><mtext> </mtext><mo>+</mo><mtext> </mtext><mi>h</mi><mo stretchy="false">(</mo><mi>c</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">g(city) \: + \: h(city)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> cannot be less than 450.</p><p id="340d43e5-41e5-4d8a-aa4d-2d12df72d00d" class="">Whether such an algorithm is optimal or not would depend on the effectiveness of the selected heuristic function.</p><h3 id="3b4cd2d6-15eb-45f4-b5f1-8b22bca15abb" class=""><strong>Admissible heuristics</strong></h3><p id="a1396605-40bb-48e6-854b-60879e126e8a" class=""><strong>Definition of being admissible : </strong>A heuristic <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> is <strong>admissible</strong> if for every node <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span>, </p><figure id="6e3c3e19-4379-49a9-b225-65e6bdcbed1d" class="equation"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><div class="equation-container"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>⁍</mtext><mo>≤</mo><mtext>⁍</mtext><mo separator="true">,</mo></mrow><annotation encoding="application/x-tex">⁍ ≤ ⁍,</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord">⁍</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.3em;vertical-align:-0.19444em;"></span><span class="mord">⁍</span><span class="mpunct">,</span></span></span></span></span></div></figure><p id="6bffe425-86c8-4487-8b36-6266fa4e0862" class="">where <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>h</mi><mo>∗</mo></msup><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h^ *(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> is the true cost to reach the goal state from <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span>.</p><p id="431211c9-cb62-48bc-81b7-1717143e6f6b" class="">From definition, we can conclude that an admissible heuristic <strong>never overestimates</strong> the cost to reach the goal, i.e., it is optimistic.</p><p id="b14a2d0e-25db-4b9c-803b-37cc68fef123" class="">An example of an admissible heuristic would be the one we used above to calculate Arad&#x27;s distance to Bucharest. In the above-used heuristic,</p><p id="701e6296-8a06-4a2b-9ad0-8498e9d73b6e" class=""> <strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>h</mi><mo>∗</mo></msup><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h^*(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong><strong> : the true cost to reach the goal state from </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span></strong><strong>. </strong></p><p id="6b5d5e12-9efc-41a5-87ed-2d935ac2d9fb" class=""> <strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></strong><strong> : straight line (Euclidean distance) distance from node </strong><strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span></strong><strong> to goal node.</strong></p><p id="c5050e22-05da-4233-a0a1-521e2a78cea3" class="">Since the straight line distance between 2 points is always less than the distance along any other path, the inequality <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>≤</mo><msup><mi>h</mi><mo>∗</mo></msup><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n) ≤ h ^\ast (n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> holds for all pair of coordinates.</p><p id="36ea9c66-5f56-4d6e-b0be-9b62af4e8084" class=""><em><strong>Theorem: </strong></em>If <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">h(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">h</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> is admissible, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">A^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> using <strong>TREE-SEARCH</strong> version is optimal [in the case that GRAPH-SEARCH version is used, admissibility is a necessary but not a sufficient condition for optimality].</p><h3 id="9e15c100-8173-47f1-a98f-2b248d9cf071" class="">Consistent heuristics</h3><p id="392350fd-5c26-4090-a0be-2b71a90b86ab" class="">
+</p><figure id="017ff72b-d6eb-4a80-b6ae-141739552174" class="image"><a href="/static/branch_Untitled%2016.png"><img style="width:432px" src="/static/branch_Untitled%2016.png"/></a></figure><ul id="d5dea403-6483-4efb-a4fa-e6c9afa619c8" class="bulleted-list"><li>Tree search version is optimal when heuristic is admissible</li></ul><ul id="242d65a7-9b3a-4f6f-a3e6-5f873cf0d8fe" class="bulleted-list"><li>Graph search version is optimal when heuristic is consistent</li></ul><ul id="26373b4e-197e-42bc-8f86-cf0ea64ce14f" class="bulleted-list"><li>Consistency subsumes admissibility, so if one can conclude that consistency <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>→</mo></mrow><annotation encoding="application/x-tex">\rightarrow</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">→</span></span></span></span></span><span>﻿</span></span> admissibility</li></ul><p id="02f468aa-4ff1-41be-842b-3f23236be98f" class=""><strong>Some intuitions:</strong></p><p id="43e64ffd-1c2a-4223-9efe-85eb353538b0" class=""><strong>Scenario: Admissible heuristics on graph search version of </strong><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">A^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="a2d131ca-1561-4d9a-bf86-bb3dc2a0a73f" class="">Example that in graph search version of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">A^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>, admissibility does not imply optimality.</p><p id="508d007a-ebfb-4e00-8945-4e3fbb7645eb" class="">Essentially, SBAG (cost=7) is the most optimal path, But on applying <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">A^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> graph version here, we get path SAG (cost=8) as the proposed final solution, which is not optimal. Intuitively, this is happening as A&#x27;s heuristic function dupes into thinking the second phase of its journey (predicted cost=1 instead of actual cost-4) makes it an overall better option than B, and hence, we make the wrong choice. Now, since A was put into the EXPLORED_LIST, when B tries to explore a new path having the edge B→A, the search does not consider this as A has already been put into the EXPLORED_LIST.</p><figure id="1f3af234-02b8-4979-91e1-324f5ddf1790" class="image"><a href="/static/branch_Untitled%2017.png"><img style="width:480px" src="/static/branch_Untitled%2017.png"/></a></figure><h2 id="e86d9e59-f06d-46f5-8672-115e0be05298" class="">Proof of optimality of TREE version of <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>A</mi><mo>∗</mo></msup></mrow><annotation encoding="application/x-tex">A^*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.688696em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.688696em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mbin mtight">∗</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></h2><figure id="835413ad-e8c2-4f46-a5bc-e297894ababb" class="image"><a href="/static/branch_Untitled%2018.png"><img style="width:480px" src="/static/branch_Untitled%2018.png"/></a></figure><p id="80318335-0a3f-4da5-8c14-4ddd82bf5fa6" class="">
+</p><figure id="506c5c7e-6615-41f3-ad3a-c3075134f0c2"><div class="source"><a href="https://www.youtube.com/watch?v=huJEgJ82360">https://www.youtube.com/watch?v=huJEgJ82360</a></div></figure><p id="0092ca64-e2da-460a-8477-eccc0cb29872" class="">
+</p></div></article></body></html>
