@@ -16,7 +16,7 @@ The team was divided into sub-groups and each subgroup studied one of the below 
 * A solver for metric TSP (accompanied by codes of different techniques)
 * A solver for the Facility Location problem
 * Attempts of the techniques we learnt on two past-year Google Hashcode problems (teammates achieved great success in solving *Self-Driving Cars*)
-* Proposal of a new Judging System
+* **Proposal of a new Judging System**
 
 ### Guide
 The guides can be found in [this folder](./guides)
